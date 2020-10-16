@@ -1,0 +1,198 @@
+* {
+  padding: 0px;
+  margin: 0px;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: lighter;
+}
+
+body {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-image: url(../../media/grass.jpg);
+  /* Blurring the background. Applies behind the element... */
+  backdrop-filter: blur(9px);
+  background-size: cover;
+}
+
+@keyframes display_data {
+  0% {
+    transform: scale3d(0.25, 0, 1);
+  }
+  25% {
+    transform: scale3d(0.5, 0, 1);
+  }
+  50% {
+    transform: scale3d(0.1, 0, 1);
+  }
+  75% {
+    transform: scale3d(0.1, 1.2, 1);
+  }
+  100% {
+    transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes display_month_days {
+  from {
+    opacity: 0%;
+  }
+  to {
+    opacity: 100%;
+  }
+}
+@keyframes display_button_back {
+  0% {
+    right: 25px;
+    transform: scale3d(0.75, 0.75, 1);
+  }
+  100% {
+    right: 0px;
+    transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes display_button_next {
+  0% {
+    left: 25px;
+    transform: scale3d(0.75, 0.75, 1);
+  }
+  100% {
+    left: 0px;
+    transform: scale3d(1, 1, 1);
+  }
+}
+@keyframes display_opacity_zoom {
+  from {
+    opacity: 0%;
+    transform: scale3d(0.5, 0.5, 1);
+  }
+  to {
+    opacity: 100%;
+    transform: scale3d(1, 1, 1);
+  }
+}
+.main {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.65);
+}
+
+.title {
+  margin-top: 7%;
+  height: 80px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  animation: display_opacity_zoom 1s ease-out;
+}
+
+.year_title {
+  margin-left: 5px;
+  font-size: 40px;
+  letter-spacing: 5px;
+  color: lightsalmon;
+  text-align: center;
+}
+
+.month_title {
+  margin-left: 15px;
+  font-size: 25px;
+  letter-spacing: 15px;
+  text-align: center;
+}
+
+.calendar {
+  height: 75%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.month_days {
+  margin-top: 10px;
+  width: 100%;
+  height: 50%;
+  animation: display_month_days 1s ease-in-out;
+}
+
+table {
+  margin-top: 20px;
+  width: 100%;
+  font-size: 22px;
+}
+
+tr,
+th,
+td {
+  background-color: none;
+}
+
+th {
+  width: 14%;
+  text-align: center;
+  color: white;
+}
+
+td {
+  width: 2.38em;
+  height: 2.38em;
+  color: white;
+  text-align: center;
+  border-radius: 50%;
+}
+
+td:hover {
+  background-color: black;
+}
+
+.data {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 95%;
+  height: 30%;
+  background-color: rgba(255, 255, 255, 0.9);
+  border: none;
+  border-radius: 5px;
+  animation: display_data 0.8s ease;
+}
+
+.data_content {
+  width: 95%;
+  height: 95%;
+}
+
+.other_month {
+  background: none;
+  color: rgba(175, 175, 175, 0.45);
+}
+
+.buttons {
+  width: 100vw;
+  height: 70px;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+}
+
+button {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  border: none;
+  font-size: 35px;
+  font-weight: 400;
+  color: white;
+}

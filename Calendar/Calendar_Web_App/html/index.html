@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar</title>
+    <script src="../script/script.js"></script>
+    <link rel="stylesheet" href="../css/style.css" />
+  </head>
+  <!-- As soon as the page loads, fulfills the table. -->
+  <body onload="load_DB(new Date().getFullYear(), new Date().getMonth())">
+    <div class="main">
+      <div class="title">
+        <span class="year_title" id="year_title"></span>
+        <span class="month_title" id="month_title"></span>
+      </div>
+      <div class="calendar">
+        <div id="month_days" class="month_days">
+          <table id="days">
+            <tr>
+              <th style="color: lightsalmon">Sun</th>
+              <th class="even">Mon</th>
+              <th>Tue</th>
+              <th class="even">Wed</th>
+              <th>Thu</th>
+              <th class="even">Fri</th>
+              <th style="color: lightsalmon">Sat</th>
+            </tr>
+          </table>
+        </div>
+        <!-- Future implementations. -->
+        <div class="data">
+          <div class="data_content">
+            <p style="color: black; font-size: 20px">No content.</p>
+          </div>
+        </div>
+      </div>
+      <div class="buttons">
+        <!-- Reteats a month. -->
+        <button
+          style="
+            animation: display_button_back 1s ease;
+            position: relative;
+          "
+          onclick="retreat_month(parseInt(document.getElementById('year_title').textContent), 
+        identify_month(document.getElementById('month_title').textContent))"
+        >
+          <img
+            src="../../media/left-arrow-line-symbol.svg"
+            style="width: 35px; height: 35px"
+            alt="back"
+          />
+        </button>
+        <!-- Shows current month. -->
+        <button
+          style="animation: display_opacity_zoom 1s ease-out;"
+          onclick="advance_month(new Date().getFullYear(), new Date().getMonth() - 1)"
+        >
+          T
+        </button>
+        <!-- Advances a month. -->
+        <button
+          style="
+            animation: display_button_next 1s ease;
+            position: relative;
+          "
+          onclick="advance_month(parseInt(document.getElementById('year_title').textContent), 
+          identify_month(document.getElementById('month_title').textContent))"
+        >
+          <img
+            src="../../media/right-arrow-angle.svg"
+            style="width: 35px; height: 35px"
+            alt="next"
+          />
+        </button>
+      </div>
+    </div>
+  </body>
+</html>
