@@ -9,7 +9,7 @@ The project shows the days of the month. It only works in mobile resolutions (no
 Script performance;
 Code polishiment;
 
-**Future Implementations**
+**Future Implementations:**
 Notes system;
 Data-base integration;
 Full release;
