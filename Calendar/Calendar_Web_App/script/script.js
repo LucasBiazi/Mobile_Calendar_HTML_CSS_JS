@@ -1,4 +1,5 @@
-const set_date = () => {
+// Returns date object with more properties
+const get_date = () => {
   const amount_of_days = (year, month) =>
     new Date(year, month + 1, 0).getDate();
 
@@ -34,11 +35,12 @@ const set_date = () => {
       date_object.getMonth()
     ),
   };
-  return console.log(date);
+  return date;
 };
 
+
 function print_month_days() {
-  set_date();
+  get_date();
 }
 
 // Loads print_month_days function as soon as the page loads.
