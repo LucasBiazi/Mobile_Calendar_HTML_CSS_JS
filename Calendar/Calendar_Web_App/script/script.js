@@ -71,13 +71,26 @@ function reset_table() {
   create_table();
 }
 
-// Run through a specific row, and all its cells.
-function populate_row(row_number, starting_cell, cell_value, class_name) {
+const change_background_color_if_weekend = (row_number) => {
+  const table = document.getElementById("days");
+  table.rows[row_number].cells[0].style.color = "lightsalmon";
+  table.rows[row_number].cells[6].style.color = "lightsalmon";
+};
+
+// Run through a specific row, and x amount of cells.
+function populate_row(
+  row_number,
+  AC_filled,
+  first_cell,
+  first_value,
+  cell_class
+) {
   setTimeout(() => {
     const table = document.getElementById("days");
-    for (let i = 0; i < table.rows[row_number].cells.length; i++) {
-      table.rows[row_number].cells[starting_cell].textContent = cell_value;
-      table.rows[row_number].cells[starting_cell].classList.add(class_name);
+    for (let i = 0; i < AC_filled; i++) {
+      table.rows[row_number].cells[first_cell + i].textContent =
+        first_value + i;
+      table.rows[row_number].cells[first_cell + i].classList.add(cell_class);
     }
   }, 1);
 }
@@ -86,23 +99,32 @@ function populate_row(row_number, starting_cell, cell_value, class_name) {
 function populate_table(date_year, date_month) {
   setTimeout(() => {
     const date = get_date(date_year, date_month);
-    const AC_current_month = 7 - date.day_of_the_week_in_which_the_month_begins;
-    const AC_last_month = 7 - AC_current_month;
-    let AD_last_month = get_date(date.year, date.month - 1).amount_of_days;
-    let day_counter = 1;
+    const total_AC = 42;
+    const AC_CM_1_row = 7 - date.day_of_the_week_in_which_the_month_begins;
+    const AC_last_month = 7 - AC_CM_1_row;
+    let AD_last_month = amount_of_days(date.year, date.month - 1);
+    let AD_counter = 0;
+    let AD_next_month = total_AC - date.amount_of_days - AC_last_month;
 
-    // first row.
-    for (let i = 0; i < AC_last_month; i++) {
-      populate_row(1, AC_last_month - i - 1, AD_last_month - i, "other_month");
-    }
-    for (i = 0; i < AC_current_month; i++) {
-      populate_row(1, 7 - i - 1, AC_current_month - i, "td");
-      day_counter++;
-    }
+    // Populates 1 cell.
+    populate_row(
+      1,
+      AC_last_month,
+      0,
+      AD_last_month - AC_last_month + 1,
+      "other_month"
+    );
+    populate_row(1, AC_CM_1_row, AC_CM_1_row + 1, 1, "td");
+    change_background_color_if_weekend(1);
+    AD_counter += AC_CM_1_row;
 
-    // For the rest of them.
-    for (i = 2; i < 7; i++) {
-      
+    // Populates the rest.
+    for (i = 0; i < 5; i++) {
+      if (AD_counter <= date.amount_of_days - AC_CM_1_row) {
+        populate_row(2 + i, 7, 0, AD_counter + 1, "td");
+        change_background_color_if_weekend(2 + i);
+        AD_counter += 7;
+      }
     }
   }, 1);
 }
