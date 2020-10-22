@@ -6,7 +6,7 @@
     <title>Calendar</title>
     <script src="../script/script.js"></script>
     <link rel="stylesheet" href="../css/style.css" />
-  </head> 
+  </head>
   <body>
     <div class="main">
       <div class="title">
@@ -36,13 +36,8 @@
       </div>
       <div class="buttons">
         <!-- Reteats a month. -->
-        <button
-          style="
-            animation: display_button_back 1s ease;
-            position: relative;
-          "
-          onclick="retreat_month(parseInt(document.getElementById('year_title').textContent), 
-        identify_month(document.getElementById('month_title').textContent))"
+        <button id="back_button"
+          style="animation: display_button_back 1s ease; position: relative"
         >
           <img
             src="../../media/left-arrow-line-symbol.svg"
@@ -51,20 +46,10 @@
           />
         </button>
         <!-- Shows current month. -->
-        <button
-          style="animation: display_opacity_zoom 1s ease-out;"
-          onclick="advance_month(new Date().getFullYear(), new Date().getMonth() - 1)"
-        >
-          T
-        </button>
+        <button id="t_button" style="animation: display_opacity_zoom 1s ease-out">T</button>
         <!-- Advances a month. -->
         <button
-          style="
-            animation: display_button_next 1s ease;
-            position: relative;
-          "
-          onclick="advance_month(parseInt(document.getElementById('year_title').textContent), 
-          identify_month(document.getElementById('month_title').textContent))"
+          id="next_button" style="animation: display_button_next 1s ease; position: relative"
         >
           <img
             src="../../media/right-arrow-angle.svg"

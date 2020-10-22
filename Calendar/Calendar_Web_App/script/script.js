@@ -1,10 +1,11 @@
 // Returns the amount of days in a month.
 const amount_of_days = (year, month) => new Date(year, month + 1, 0).getDate();
 
+// Day of the week in which the month starts.
 const first_day_week_for_month = (year, month) =>
   new Date(year, month, 1).getDay();
 
-// Returns current date object with more properties.
+// Returns a date object, with more properties.
 const get_date = (date_year, date_month) => {
   const month_names = [
     "January",
@@ -38,7 +39,7 @@ const get_date = (date_year, date_month) => {
   return date;
 };
 
-// Prints year + month on the html after 1 milisecond..
+// Prints year + month on the html.
 function print_year_and_month(date_year, date_month) {
   setTimeout(() => {
     const date = get_date(date_year, date_month);
@@ -47,7 +48,7 @@ function print_year_and_month(date_year, date_month) {
   }, 1);
 }
 
-// Creates the table after 1 milisecond.
+// Creates the table.
 function create_table() {
   setTimeout(() => {
     const table = document.getElementById("days");
@@ -62,69 +63,85 @@ function create_table() {
   }, 1);
 }
 
-// Clean all data on the table, then create it again.
+// Delete the last 5 rows.
 function reset_table() {
-  const table = document.getElementById("days");
-  for (let i = 0; i < 6; i++) {
-    table.deleteRow(1 + i);
-  }
-  create_table();
+  setTimeout(() => {
+    const table = document.getElementById("days");
+    for (let i = 0; i < 6; i++) {
+      table.deleteRow(1);
+    }
+  }, 1);
 }
 
 const change_background_color_if_weekend = (row_number) => {
-  const table = document.getElementById("days");
-  table.rows[row_number].cells[0].style.color = "lightsalmon";
-  table.rows[row_number].cells[6].style.color = "lightsalmon";
+  setTimeout(() => {
+    const table = document.getElementById("days");
+    if (table.rows[row_number].cells[6].classList == "td") {
+      table.rows[row_number].cells[6].style.color = "lightsalmon";
+    }
+    if (table.rows[row_number].cells[0].classList == "td") {
+      table.rows[row_number].cells[0].style.color = "lightsalmon";
+    }
+  }, 10);
 };
 
 // Run through a specific row, and x amount of cells.
 function populate_row(
+  execution_times,
   row_number,
-  AC_filled,
   first_cell,
   first_value,
   cell_class
 ) {
   setTimeout(() => {
-    const table = document.getElementById("days");
-    for (let i = 0; i < AC_filled; i++) {
-      table.rows[row_number].cells[first_cell + i].textContent =
-        first_value + i;
-      table.rows[row_number].cells[first_cell + i].classList.add(cell_class);
+    if (execution_times <= 7 - first_cell && execution_times !== 0) {
+      const table = document.getElementById("days");
+      for (let i = 0; i < execution_times; i++) {
+        table.rows[row_number].cells[first_cell + i].textContent =
+          first_value + i;
+        table.rows[row_number].cells[first_cell + i].classList.add(cell_class);
+      }
+    } else {
+      console.log("Alert on populate_row function.");
     }
-  }, 1);
+  }, 10);
 }
 
 // Populates the table. AD = Amount of days. AC = Amount of cells.
 function populate_table(date_year, date_month) {
   setTimeout(() => {
     const date = get_date(date_year, date_month);
-    const total_AC = 42;
     const AC_CM_1_row = 7 - date.day_of_the_week_in_which_the_month_begins;
     const AC_last_month = 7 - AC_CM_1_row;
+    const AC_next_month = 42 - date.amount_of_days - AC_last_month;
     let AD_last_month = amount_of_days(date.year, date.month - 1);
-    let AD_counter = 0;
-    let AD_next_month = total_AC - date.amount_of_days - AC_last_month;
-
-    // Populates 1 cell.
+    let day_counter = AC_CM_1_row;
+    // Populates the 1 row.
     populate_row(
+      AC_CM_1_row,
       1,
+      date.day_of_the_week_in_which_the_month_begins,
+      1,
+      "td"
+    );
+    populate_row(
       AC_last_month,
+      1,
       0,
       AD_last_month - AC_last_month + 1,
       "other_month"
     );
-    populate_row(1, AC_CM_1_row, AC_CM_1_row + 1, 1, "td");
     change_background_color_if_weekend(1);
-    AD_counter += AC_CM_1_row;
 
-    // Populates the rest.
-    for (i = 0; i < 5; i++) {
-      if (AD_counter <= date.amount_of_days - AC_CM_1_row) {
-        populate_row(2 + i, 7, 0, AD_counter + 1, "td");
-        change_background_color_if_weekend(2 + i);
-        AD_counter += 7;
+    // Populates the last 5 rows.
+    for (let i = 1; i < 6; i++) {
+      if (day_counter < date.amount_of_days) {
+        populate_row(7, 1 + i, 0, day_counter + 1, "td");
+
+        change_background_color_if_weekend(1 + i);
       }
+      // if (AC_next_month <= 7) {
+      // }
     }
   }, 1);
 }
