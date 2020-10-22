@@ -110,12 +110,14 @@ function populate_row(
 // Populates the table. AD = Amount of days. AC = Amount of cells.
 function populate_table(date_year, date_month) {
   setTimeout(() => {
+    const table = document.getElementById("days");
     const date = get_date(date_year, date_month);
     const AC_CM_1_row = 7 - date.day_of_the_week_in_which_the_month_begins;
     const AC_last_month = 7 - AC_CM_1_row;
     const AC_next_month = 42 - date.amount_of_days - AC_last_month;
     let AD_last_month = amount_of_days(date.year, date.month - 1);
     let day_counter = AC_CM_1_row;
+    let AD_CM = date.amount_of_days - day_counter;
     // Populates the 1 row.
     populate_row(
       AC_CM_1_row,
@@ -135,13 +137,26 @@ function populate_table(date_year, date_month) {
 
     // Populates the last 5 rows.
     for (let i = 1; i < 6; i++) {
-      if (day_counter < date.amount_of_days) {
+      if (AD_CM >= 7) {
         populate_row(7, 1 + i, 0, day_counter + 1, "td");
-
+        day_counter += 7;
+        AD_CM -= 7;
         change_background_color_if_weekend(1 + i);
+      } else {
+        for (i = 0; i < 7; i++) {
+          if (table.rows[5].cells[i].textContent === "") {
+            populate_row(AD_CM, 5, i, day_counter + 1, "td");
+            AD_CM = 0;
+            change_background_color_if_weekend(5);
+          } else {
+            console.log(AD_CM)
+            i = 0;
+            populate_row(AD_CM, 6, i, day_counter + 1, "td");
+            AD_CM = 0;
+            change_background_color_if_weekend(6);
+          }
+        }
       }
-      // if (AC_next_month <= 7) {
-      // }
     }
   }, 1);
 }
@@ -149,7 +164,7 @@ function populate_table(date_year, date_month) {
 function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
-  populate_table(new Date().getFullYear(), new Date().getMonth());
+  populate_table(2021, 0);
 }
 
 // Loads main function as soon as the page loads.
