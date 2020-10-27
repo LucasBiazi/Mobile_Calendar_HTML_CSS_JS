@@ -6,7 +6,7 @@ const first_day_week_for_month = (year, month) =>
   new Date(year, month, 1).getDay();
 
 // Returns a date object, with more properties.
-const get_date = (date_year, date_month) => {
+const date_object = (date_year, date_month) => {
   const month_names = [
     "January",
     "February",
@@ -42,9 +42,9 @@ const get_date = (date_year, date_month) => {
 // Prints year + month on the html.
 function print_year_and_month(date_year, date_month) {
   setTimeout(() => {
-    const date = get_date(date_year, date_month);
-    document.getElementById("year_title").textContent = date.year;
-    document.getElementById("month_title").textContent = date.month_name;
+    const date = date_object(date_year, date_month);
+    document.getElementById("year_title").innerText = date.year;
+    document.getElementById("month_title").innerText = date.month_name;
   }, 1);
 }
 
@@ -63,7 +63,7 @@ function create_table() {
   }, 1);
 }
 
-// Delete the last 5 rows.
+// Delete the last 6 rows.
 function reset_table() {
   setTimeout(() => {
     const table = document.getElementById("days");
@@ -82,22 +82,22 @@ const change_background_color_if_weekend = (row_number) => {
     if (table.rows[row_number].cells[0].classList == "td") {
       table.rows[row_number].cells[0].style.color = "lightsalmon";
     }
-  }, 10);
+  }, 15);
 };
 
 // Run through a specific row, and x amount of cells.
 function populate_row(
-  execution_times,
+  execution_number,
   row_number,
   first_cell,
   first_value,
   cell_class
 ) {
   setTimeout(() => {
-    if (execution_times <= 7 - first_cell && execution_times !== 0) {
-      const table = document.getElementById("days");
-      for (let i = 0; i < execution_times; i++) {
-        table.rows[row_number].cells[first_cell + i].textContent =
+    if (execution_number <= 7) {
+      var table = document.getElementById("days");
+      for (let i = 0; i < execution_number; i++) {
+        table.rows[row_number].cells[first_cell + i].innerText =
           first_value + i;
         table.rows[row_number].cells[first_cell + i].classList.add(cell_class);
       }
@@ -111,14 +111,13 @@ function populate_row(
 function populate_table(date_year, date_month) {
   setTimeout(() => {
     const table = document.getElementById("days");
-    const date = get_date(date_year, date_month);
+    const date = date_object(date_year, date_month);
     const AC_CM_1_row = 7 - date.day_of_the_week_in_which_the_month_begins;
     const AC_last_month = 7 - AC_CM_1_row;
     const AC_next_month = 42 - date.amount_of_days - AC_last_month;
     let AD_last_month = amount_of_days(date.year, date.month - 1);
     let day_counter = AC_CM_1_row;
-    let AD_CM = date.amount_of_days - day_counter;
-    // Populates the 1 row.
+    // 1 row
     populate_row(
       AC_CM_1_row,
       1,
@@ -126,36 +125,37 @@ function populate_table(date_year, date_month) {
       1,
       "td"
     );
-    populate_row(
-      AC_last_month,
-      1,
-      0,
-      AD_last_month - AC_last_month + 1,
-      "other_month"
-    );
     change_background_color_if_weekend(1);
+    // other rows
+    for (let i = 2; i < 5; i++) {
+      populate_row(7, i, 0, day_counter + 1, "td");
+      change_background_color_if_weekend(i);
+      day_counter += 7;
+    }
 
-    // Populates the last 5 rows.
-    for (let i = 1; i < 6; i++) {
-      if (AD_CM >= 7) {
-        populate_row(7, 1 + i, 0, day_counter + 1, "td");
-        day_counter += 7;
-        AD_CM -= 7;
-        change_background_color_if_weekend(1 + i);
+    if (day_counter < date.amount_of_days) {
+      if (date.amount_of_days - day_counter <= 7) {
+        populate_row(
+          date.amount_of_days - day_counter,
+          5,
+          0,
+          day_counter + 1,
+          "td"
+        );
+        day_counter += date.amount_of_days - day_counter;
+        change_background_color_if_weekend(5);
+        console.log(day_counter);
       } else {
-        for (i = 0; i < 7; i++) {
-          if (table.rows[5].cells[i].textContent === "") {
-            populate_row(AD_CM, 5, i, day_counter + 1, "td");
-            AD_CM = 0;
-            change_background_color_if_weekend(5);
-          } else {
-            console.log(AD_CM)
-            i = 0;
-            populate_row(AD_CM, 6, i, day_counter + 1, "td");
-            AD_CM = 0;
-            change_background_color_if_weekend(6);
-          }
-        }
+        populate_row(
+          7,
+          5,
+          0,
+          day_counter + 1,
+          "td"
+        );
+        day_counter += date.amount_of_days - day_counter;
+        change_background_color_if_weekend(5);
+        console.log(day_counter);
       }
     }
   }, 1);
@@ -164,7 +164,7 @@ function populate_table(date_year, date_month) {
 function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
-  populate_table(2021, 0);
+  populate_table(new Date().getFullYear() + 1, 0);
 }
 
 // Loads main function as soon as the page loads.
