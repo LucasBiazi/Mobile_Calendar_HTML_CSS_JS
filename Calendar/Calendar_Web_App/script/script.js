@@ -123,7 +123,7 @@ function populate_table(date_year, date_month) {
         7 - AC_CM_1_row,
         1,
         0,
-        AD_last_month - AC_CM_1_row,
+        AD_last_month - (7 - AC_CM_1_row) + 1,
         "other_month"
       );
     }
@@ -185,7 +185,7 @@ function populate_table(date_year, date_month) {
 function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
-  populate_table(new Date().getFullYear(), 10);
+  populate_table(new Date().getFullYear(), 1);
 }
 
 // Loads main function as soon as the page loads.
