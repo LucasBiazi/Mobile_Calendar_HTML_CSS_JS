@@ -70,7 +70,7 @@ function reset_table() {
     for (let i = 0; i < 6; i++) {
       table.deleteRow(1);
     }
-  }, 1);
+  }, 2);
 }
 
 const change_background_color_if_weekend = (row_number) => {
@@ -104,7 +104,7 @@ function populate_row(
     } else {
       console.log("Alert on populate_row function.");
     }
-  }, 10);
+  }, 2);
 }
 
 // Populates the table. AD = Amount of days. AC = Amount of cells.
@@ -114,10 +114,19 @@ function populate_table(date_year, date_month) {
     const date = date_object(date_year, date_month);
     const AC_CM_1_row = 7 - date.day_of_the_week_in_which_the_month_begins;
     const AC_last_month = 7 - AC_CM_1_row;
-    const AC_next_month = 42 - date.amount_of_days - AC_last_month;
+    let AC_next_month = 42 - date.amount_of_days - AC_last_month;
     let AD_last_month = amount_of_days(date.year, date.month - 1);
     let day_counter = AC_CM_1_row;
     // 1 row
+    if (AC_CM_1_row < 7) {
+      populate_row(
+        7 - AC_CM_1_row,
+        1,
+        0,
+        AD_last_month - AC_CM_1_row,
+        "other_month"
+      );
+    }
     populate_row(
       AC_CM_1_row,
       1,
@@ -125,46 +134,58 @@ function populate_table(date_year, date_month) {
       1,
       "td"
     );
-    change_background_color_if_weekend(1);
     // other rows
-    for (let i = 2; i < 5; i++) {
+    let i = 2;
+    while (day_counter < date.amount_of_days) {
       populate_row(7, i, 0, day_counter + 1, "td");
-      change_background_color_if_weekend(i);
       day_counter += 7;
-    }
-
-    if (day_counter < date.amount_of_days) {
-      if (date.amount_of_days - day_counter <= 7) {
+      i++;
+      if (
+        date.amount_of_days - day_counter <= 7 &&
+        date.amount_of_days - day_counter !== 0
+      ) {
+        console.log("in");
         populate_row(
           date.amount_of_days - day_counter,
-          5,
+          i,
           0,
           day_counter + 1,
           "td"
         );
-        day_counter += date.amount_of_days - day_counter;
-        change_background_color_if_weekend(5);
-        console.log(day_counter);
-      } else {
-        populate_row(
-          7,
-          5,
-          0,
-          day_counter + 1,
-          "td"
-        );
-        day_counter += date.amount_of_days - day_counter;
-        change_background_color_if_weekend(5);
-        console.log(day_counter);
+        if (i === 5 || i === 6) {
+          console.log("in " + AC_next_month);
+          while (AC_next_month !== 0) {
+            populate_row(
+              7 - (date.amount_of_days - day_counter),
+              i,
+              date.amount_of_days - day_counter,
+              1,
+              "other_month"
+            );
+            AC_next_month -= 7 - (date.amount_of_days - day_counter);
+            if (AC_next_month > 0) {
+              populate_row(
+                7,
+                i + 1,
+                0,
+                1 + (7 - (date.amount_of_days - day_counter)),
+                "other_month"
+              );
+              AC_next_month -= 7;
+            }
+          }
+        }
+        day_counter = date.amount_of_days;
       }
     }
+    for (let x = 1; x < 7; x++) change_background_color_if_weekend(x);
   }, 1);
 }
 
 function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
-  populate_table(new Date().getFullYear() + 1, 0);
+  populate_table(new Date().getFullYear(), 10);
 }
 
 // Loads main function as soon as the page loads.
