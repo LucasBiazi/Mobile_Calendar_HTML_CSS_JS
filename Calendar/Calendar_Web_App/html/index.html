@@ -17,45 +17,30 @@
         <div id="month_days" class="month_days">
           <table id="days">
             <tr>
-              <th style="color: lightsalmon">Sun</th>
+              <th>Sun</th>
               <th class="even">Mon</th>
               <th>Tue</th>
               <th class="even">Wed</th>
               <th>Thu</th>
               <th class="even">Fri</th>
-              <th style="color: lightsalmon">Sat</th>
+              <th>Sat</th>
             </tr>
           </table>
         </div>
         <!-- Future implementations. -->
         <div class="data">
           <div class="data_content">
-            <p style="color: black; font-size: 20px">No content.</p>
+            <p class="p_data_content">No content.</p>
           </div>
         </div>
       </div>
       <div class="buttons">
-        <!-- Reteats a month. -->
-        <button id="back_button"
-          style="animation: display_button_back 1s ease; position: relative"
-        >
-          <img
-            src="../../media/left-arrow-line-symbol.svg"
-            style="width: 35px; height: 35px"
-            alt="back"
-          />
+        <button id="back_button">
+          <img class="arrow_img" alt="back" />
         </button>
-        <!-- Shows current month. -->
-        <button id="t_button" style="animation: display_opacity_zoom 1s ease-out">T</button>
-        <!-- Advances a month. -->
-        <button
-          id="next_button" style="animation: display_button_next 1s ease; position: relative"
-        >
-          <img
-            src="../../media/right-arrow-angle.svg"
-            style="width: 35px; height: 35px"
-            alt="next"
-          />
+        <button id="t_button">T</button>
+        <button id="next_button">
+          <img class="arrow_img" alt="next" />
         </button>
       </div>
     </div>
