@@ -223,20 +223,20 @@ function load_buttons() {
   back_button.addEventListener("click", () => {
     reset_table_data_style();
     table_date.month -= 1;
-    populate_table(table_date.year, table_date.month);
     print_year_and_month(table_date.year, table_date.month);
+    populate_table(table_date.year, table_date.month);
   });
   t_button.addEventListener("click", () => {
     reset_table_data_style();
-    populate_table(new Date().getFullYear(), new Date().getMonth());
-    print_year_and_month(new Date().getFullYear(), new Date().getMonth());
     table_date = date_object(new Date().getFullYear(), new Date().getMonth());
+    print_year_and_month(new Date().getFullYear(), new Date().getMonth());
+    populate_table(new Date().getFullYear(), new Date().getMonth());
   });
   next_button.addEventListener("click", () => {
     reset_table_data_style();
     table_date.month += 1;
-    populate_table(table_date.year, table_date.month);
     print_year_and_month(table_date.year, table_date.month);
+    populate_table(table_date.year, table_date.month);
   });
 }
 
