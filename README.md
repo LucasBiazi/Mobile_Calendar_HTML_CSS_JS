@@ -1,5 +1,5 @@
 -----------------------------------------------------------------------------------------------------------------------------
-# Mobile_Calendar, current version: 0.2.0.1
+# Mobile_Calendar, current version: 0.2.0.2
 -----------------------------------------------------------------------------------------------------------------------------
 **Goal:**
 This is project is meant to be a calendar for mobile and desktop devices. It is, and will always be an open source project. Suggestions are always welcome.
