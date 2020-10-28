@@ -228,10 +228,10 @@ function load_buttons() {
   setTimeout(() => {
     const back_button = document.getElementById("back_button");
     const t_button = document.getElementById("t_button");
-    const next_button = document.getElementById("next_button");
-    const table_date = get_table_date();
+    const next_button = document.getElementById("next_button");    
 
     back_button.addEventListener("click", () => {
+      let table_date = get_table_date();
       reset_table_data_style();
       table_date.month -= 1;
       populate_table(table_date.year, table_date.month);
@@ -241,8 +241,10 @@ function load_buttons() {
       reset_table_data_style();
       populate_table(new Date().getFullYear(), new Date().getMonth());
       print_year_and_month(new Date().getFullYear(), new Date().getMonth());
+      table_date = date_object(new Date().getFullYear(), new Date().getMonth());
     });
     next_button.addEventListener("click", () => {
+      let table_date = get_table_date();
       reset_table_data_style();
       table_date.month += 1;
       populate_table(table_date.year, table_date.month);
