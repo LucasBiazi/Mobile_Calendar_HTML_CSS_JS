@@ -1,12 +1,12 @@
 // Returns the amount of days in a month.
 const amount_of_days = (year, month) => new Date(year, month + 1, 0).getDate();
 
-// Day of the week in which the month starts.
+// Returns the day of the week in which the month starts.
 const first_day_week_for_month = (year, month) =>
   new Date(year, month, 1).getDay();
 
 // When given the name, it returns the month number (0-11).
-function month_convertion(month_name) {
+function month_name_in_number(month_name) {
   const month_names = [
     "January",
     "February",
@@ -63,7 +63,7 @@ const date_object = (date_year, date_month) => {
 // Returns a date object based on the table data.
 function get_table_date() {
   const table_year = parseInt(document.getElementById("year_title").innerText);
-  const table_month = month_convertion(
+  const table_month = month_name_in_number(
     document.getElementById("month_title").innerText
   );
   return date_object(table_year, table_month);
@@ -89,7 +89,7 @@ function create_table() {
   }
 }
 
-// Resets all table data style properties.
+// Resets the 'td' data style properties.
 function reset_table_data_style() {
   const table = document.getElementById("days");
   for (let i = 1; i < 7; i++) {
@@ -134,6 +134,7 @@ const change_background_color_if_today = (row_number) => {
   }
 };
 
+// Applies the background + today style.
 function load_table_style() {
   for (let x = 1; x < 7; x++) {
     change_background_color_if_weekend(x);
@@ -141,7 +142,7 @@ function load_table_style() {
   }
 }
 
-// Run through a specific row, and x amount of cells.
+// Populates a row. 
 function populate_row(
   execution_number,
   row_number,
@@ -207,13 +208,14 @@ function populate_table(date_year, date_month) {
   load_table_style();
 }
 
-// Loads today's date.
+// Loads today's data.
 function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
   populate_table(new Date().getFullYear(), new Date().getMonth());
 }
 
+// Loads buttons.
 function load_buttons() {
   const back_button = document.getElementById("back_button");
   const t_button = document.getElementById("t_button");
@@ -248,4 +250,5 @@ function trigger_script() {
   });
 }
 
+// Triggers the code.
 trigger_script();
