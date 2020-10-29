@@ -1,11 +1,11 @@
 -----------------------------------------------------------------------------------------------------------------------------
-# Mobile_Calendar, current version: 0.2.0.3
+# Mobile_Calendar, current version: 0.2.1.3
 -----------------------------------------------------------------------------------------------------------------------------
 **Goal:**
 This is project is meant to be a calendar for mobile and desktop devices. It is, and will always be an open source project. Suggestions are always welcome.
 
 **Currently:**
-The project shows the days of the month. It only works in mobile resolutions (not responsive).
+The project shows the days of the month. Well displayed in most mobile + small/medium monitors. Tablets may face issues.
 
 **Working at the moment:**
 Script performance;

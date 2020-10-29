@@ -110,7 +110,7 @@ body {
 
 .calendar {
   height: 75%;
-  width: 100%;
+  width: 100vw;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -207,6 +207,10 @@ button {
   color: white;
 }
 
+button:hover{
+  cursor: pointer;
+}
+
 button:first-child{
   animation: display_button_back 1s ease; 
   position: relative;
@@ -233,4 +237,33 @@ button:last-child img{
 .arrow_img{
   width: 35px; 
   height: 35px"
+}
+
+@media only screen and (min-width: 1279px){
+  .title{
+    margin-top: 2%;
+  }
+  
+  .data{
+    margin-top: 35px;    
+    height: 70vh;
+  }
+
+  .calendar{
+    width: 97vw;
+    flex-direction: row;
+    align-items: flex-start; 
+  }
+
+  .month_days{
+    height: fit-content;
+  }
+
+  td{
+    border-radius: 0%;
+  }
+  .buttons{
+    width: 50vw;
+  }
+
 }
