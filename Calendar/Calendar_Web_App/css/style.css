@@ -230,17 +230,41 @@ button:last-child img{
   height: 35px"
 }
 
-.add_schedule_display{
+.hide_pop_up{
+  display: none;
+
+}
+
+.schedule_display{
+  display: flex;
   width: 95vw;
   height: 80vh;
   position: absolute;
   display: flex;
   border-radius: 5px;
   background: white;
+  justify-content: space-between;
+  align-items: flex-start;
+  /* open Animation */
 }
 
-.add_schedule_close{
+.schedule_close{
   display: none;
+  /* close Animation */
+}
+
+.close_button{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: lightcoral;
+}
+
+.close_button span{
+  font-size: 25px;
+  margin-right: 10px;
 }
 
 
