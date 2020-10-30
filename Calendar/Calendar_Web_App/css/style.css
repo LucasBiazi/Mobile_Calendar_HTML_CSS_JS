@@ -159,26 +159,17 @@ td:hover {
   background-color: darkorchid;
 }
 
-.data {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.data_display {
   width: 95%;
   height: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
   background-color: rgba(255, 255, 255, 0.9);
   border: none;
   border-radius: 5px;
   animation: display_data 0.8s ease;
-}
-
-.data_content {
-  width: 95%;
-  height: 95%;
-}
-
-.p_data_content{
-  color: gray; 
-  font-size: 20px;
 }
 
 .other_month {
