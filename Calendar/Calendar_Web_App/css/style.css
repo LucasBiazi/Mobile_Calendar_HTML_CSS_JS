@@ -156,7 +156,7 @@ td {
 }
 
 td:hover {
-  background-color: darkorchid;
+  background-color: rgba(112, 203, 255, 0.349);
 }
 
 .data_display {
@@ -230,12 +230,26 @@ button:last-child img{
   height: 35px"
 }
 
+.add_schedule_display{
+  width: 95vw;
+  height: 80vh;
+  position: absolute;
+  display: flex;
+  border-radius: 5px;
+  background: white;
+}
+
+.add_schedule_close{
+  display: none;
+}
+
+
 @media only screen and (min-width: 1279px){
   .title{
     margin-top: 2%;
   }
   
-  .data{
+  .data_display{
     margin-top: 35px;    
     height: 70vh;
   }

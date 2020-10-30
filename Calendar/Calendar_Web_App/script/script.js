@@ -142,7 +142,7 @@ function load_table_style() {
   }
 }
 
-// Populates a row. 
+// Populates a row.
 function populate_row(
   execution_number,
   row_number,
@@ -208,11 +208,25 @@ function populate_table(date_year, date_month) {
   load_table_style();
 }
 
+function add_schedule() {
+  const table = document.getElementById("days");
+  const pop_up = document.getElementById("add_schedule");
+  for (let i = 1; i < 7; i++) {
+    for (let x = 0; x < 7; x++) {
+      table.rows[i].cells[x].addEventListener("click", () => {
+        console.log("Row number: " + i + "\nCell number: " + x);
+        pop_up.classList.add("add_schedule_display");
+      });
+    }
+  }
+}
+
 // Loads today's data.
 function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
   populate_table(new Date().getFullYear(), new Date().getMonth());
+  add_schedule();
 }
 
 // Loads buttons.
