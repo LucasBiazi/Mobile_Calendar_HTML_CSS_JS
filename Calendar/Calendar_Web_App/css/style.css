@@ -33,7 +33,7 @@ body {
     transform: scale3d(1, 1, 1);
   }
 }
-@keyframes display_month_days {
+@keyframes opacity {
   from {
     opacity: 0%;
   }
@@ -71,6 +71,27 @@ body {
     transform: scale3d(1, 1, 1);
   }
 }
+@keyframes display_schedule {
+  from{    
+    opacity: 0%;
+    transform: scale3d(.25,1,1);
+  }
+  to{
+    opacity: 100%;
+    transform: scale3d(1,1,1);
+  }
+}
+@keyframes close_schedule {
+  from{    
+    opacity: 100%;
+    transform: scale3d(1,1,1);
+  }
+  to{
+    opacity: 0%;
+    transform: scale3d(.25,1,1);
+  }
+}
+
 .main {
   width: 100vw;
   height: 100vh;
@@ -121,7 +142,7 @@ body {
   margin-top: 10px;
   width: 100%;
   height: 50%;
-  animation: display_month_days 1s ease-in-out;
+  animation: opacity 1s ease-in-out;
 }
 
 table {
@@ -166,10 +187,10 @@ td:hover {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: white;
   border: none;
   border-radius: 5px;
-  animation: display_data 0.8s ease;
+  animation: display_data 1s ease;
 }
 
 .other_month {
@@ -237,7 +258,7 @@ button:last-child img{
 
 .schedule_display{
   display: flex;
-  width: 95vw;
+  width: 97vw;
   height: 80vh;
   position: absolute;
   display: flex;
@@ -245,12 +266,12 @@ button:last-child img{
   background: white;
   justify-content: space-between;
   align-items: flex-start;
-  /* open Animation */
+  animation: display_schedule .3s ease;
 }
 
 .schedule_close{
-  display: none;
-  /* close Animation */
+  animation: close_schedule .3s ease;
+  animation-fill-mode: forwards;
   /* #87FFA7 <= Color for schedules */
 }
 
@@ -260,7 +281,6 @@ button:last-child img{
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  background-color: lightcoral;
 }
 
 .close_button span{

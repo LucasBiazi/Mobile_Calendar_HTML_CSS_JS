@@ -140,6 +140,7 @@ function load_table_style() {
     change_background_color_if_weekend(x);
     change_background_color_if_today(x);
   }
+  add_schedule_event();
 }
 
 // Populates a row.
@@ -208,7 +209,7 @@ function populate_table(date_year, date_month) {
   load_table_style();
 }
 
-function display_schedule() {
+function add_schedule_event() {
   const table = document.getElementById("days");
   const pop_up = document.getElementById("add_schedule");
   const close_button = document.getElementById("close_schedule_form");
@@ -220,8 +221,10 @@ function display_schedule() {
         pop_up.classList.add("schedule_display");
 
         close_button.addEventListener("click", () => {
-          pop_up.classList.remove("schedule_display");
           pop_up.classList.add("schedule_close");
+          setTimeout(() => {
+            pop_up.classList.remove("schedule_display");
+          }, 300);
         });
       });
     }
@@ -233,7 +236,6 @@ function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
   populate_table(new Date().getFullYear(), new Date().getMonth());
-  display_schedule();
 }
 
 // Loads buttons.
