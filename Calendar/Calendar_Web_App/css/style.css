@@ -251,6 +251,7 @@ button:last-child img{
 .schedule_close{
   display: none;
   /* close Animation */
+  /* #87FFA7 <= Color for schedules */
 }
 
 .close_button{
@@ -265,6 +266,10 @@ button:last-child img{
 .close_button span{
   font-size: 25px;
   margin-right: 10px;
+}
+
+.close_button span:hover{
+  cursor: pointer;
 }
 
 
