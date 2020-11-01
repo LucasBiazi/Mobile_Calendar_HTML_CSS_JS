@@ -182,8 +182,32 @@ td:hover {
   background-color: white;
   border: none;
   border-radius: 5px;
+  overflow-y: scroll;
   /* animation: display_data 2s ease; */
 }
+
+.data_display div{
+  display: flex;
+  flex-wrap: wrap;
+  width: 85%;
+  padding: 20px;
+  background-color: lightgray;
+}
+
+/* .data_display_title{
+  color: lightsalmon;
+  font-size: 21px;
+  font-weight: bold;
+}
+.data_display_time{
+  color: lightskyblue;
+  font-size: 21px;
+}
+.data_display_description{
+  font-size: 20px;
+  color: black;  
+} */
+
 
 .other_month {
   background: none;
@@ -313,21 +337,21 @@ input{
   border-right: none;
   border-left: none;
 }
-.schedule_time_div{
-  height: 180px;
+.schedule_time_div{  
+  height: 15%;
+  flex-direction: row;
 }
 
-.schedule_time_div input{
+.schedule_time_div input{  
   width: 150px;
   height: 50px;
 }
 
-.schedule_description_div {
-  height: 150px;
-}
-
-.schedule_description_div input{
-  height: 90%;
+.schedule_time_div_2{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
 }
 
 .schedule_button_div{

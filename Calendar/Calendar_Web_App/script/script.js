@@ -134,7 +134,7 @@ const change_background_color_if_today = (row_number) => {
   }
 };
 
-// Applies the background + today style.
+// Applies the background + today style. + loads schedules
 function load_table_style() {
   for (let x = 1; x < 7; x++) {
     change_background_color_if_weekend(x);
@@ -219,7 +219,12 @@ function add_schedule_event() {
         console.log("Row number: " + i + "\nCell number: " + x);
         pop_up.classList.remove("schedule_close");
         pop_up.classList.add("schedule_display");
-
+        save_schedule(table.rows[i].cells[x].innerText);
+        // ADD a list system that starts in the smallest day, and shows the irformation of the
+        // current month.
+        // Required On title!
+        // Close after confirming!
+        // Clean code.
         close_button.addEventListener("click", () => {
           pop_up.classList.add("schedule_close");
           setTimeout(() => {
@@ -229,6 +234,29 @@ function add_schedule_event() {
       });
     }
   }
+}
+
+function save_schedule(day) {
+  const button = document.getElementById("save_schedule");
+  button.addEventListener("click", () => {
+    const initial_time = document.getElementById("schedule_initial_time").value;
+    const final_time = document.getElementById("schedule_ending_time").value;
+    const title = document.getElementById("schedule_title").value;
+    const description = document.getElementById("schedule_description").value;
+    const data_display = document.getElementById("data_display_p");
+
+    data_display.innerText =
+      "\n" +
+      "On day: " +
+      day +
+      title +
+      " " +
+      initial_time +
+      " - " +
+      final_time +
+      "\n" +
+      description;
+  });
 }
 
 // Loads today's data.
