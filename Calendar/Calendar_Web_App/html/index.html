@@ -12,6 +12,25 @@
       <div class="close_button">
         <span id="close_schedule_form">X</span>
       </div>
+      <form>
+        <div class="schedule_time_div">
+          <label for="schedule_starting_time">Starting at:</label>
+          <input id="schedule_starting_time" type="time" value="00:00" />
+          <label for="schedule_ending_time">Ending at:</label>
+          <input id="schedule_ending_time" type="time" value="23:59" />
+        </div>
+        <div class="schedule_title_div">
+          <label for="schedule_title">Title</label>
+          <input id="schedule_title" type="text" required/>
+        </div>
+        <div class="schedule_description_div">
+          <label for="schedule_description">Description</label>
+          <input id="schedule_description" type="text" required/>
+        </div>
+        <div class="schedule_button_div">
+          <button type="submit">Confirm</button>
+        </div>
+      </form>
     </div>
     <div class="main">
       <div class="title">
