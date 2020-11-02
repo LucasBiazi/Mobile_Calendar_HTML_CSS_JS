@@ -206,21 +206,9 @@ function populate_table(date_year, date_month) {
     }
   }
   load_table_style();
-  add_schedule_event();
 }
 
-function add_schedule_event() {
-  const table = document.getElementById("days");
-  for (let i = 1; i < 7; i++) {
-    for (let x = 0; x < 7; x++) {
-      table.rows[i].cells[x].addEventListener("click", () => {
-        add_new_schedule(table.rows[i].cells[x].innerText);
-      });
-    }
-  }
-}
-
-function show_pop_up() {
+function open_pop_up() {
   const pop_up = document.getElementById("add_schedule");
   pop_up.classList.remove("schedule_close");
   pop_up.classList.add("schedule_display");
@@ -232,8 +220,21 @@ function close_pop_up() {
   pop_up.classList.remove("schedule_display");
 }
 
+function add_schedule_event() {
+  const table = document.getElementById("days");
+  for (let i = 1; i < 7; i++) {
+    for (let x = 0; x < 7; x++) {
+      table.rows[i].cells[x].addEventListener("click", () => {
+        console.log("Row: " + i + "\nCell: " + x);
+        add_new_schedule(table.rows[i].cells[x].innerText);
+      });
+    }
+  }
+}
+
+
 function add_new_schedule(day) {
-  show_pop_up();
+  open_pop_up();
   const confirm_button = document.getElementById("save_schedule");
   const exit_button = document.getElementById("close_pop_up");
   const date = document.getElementById("day");
@@ -244,12 +245,13 @@ function add_new_schedule(day) {
   confirm_button.addEventListener("click", () => {
     console.log(day);
     const input_title = document.getElementById("schedule_title");
-    const input_init_time = document.getElementById("schedule_initial_time");
-    const input_final_time = document.getElementById("schedule_final_time");
-    const input_description = document.getElementById("schedule_description");
-    if (input_title.value !== "") {    
-      const data_display = document.getElementById("data_display");
+
+    if (input_title.value !== "") {
       // Create
+      const data_display = document.getElementById("data_display");
+      const input_init_time = document.getElementById("schedule_initial_time");
+      const input_final_time = document.getElementById("schedule_final_time");
+      const input_description = document.getElementById("schedule_description");
       const data_item = document.createElement("div");
       const title_div = document.createElement("div");
       const span_title = document.createElement("span");
@@ -293,6 +295,7 @@ function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
   populate_table(new Date().getFullYear(), new Date().getMonth());
+  add_schedule_event();
 }
 
 // Loads buttons.
