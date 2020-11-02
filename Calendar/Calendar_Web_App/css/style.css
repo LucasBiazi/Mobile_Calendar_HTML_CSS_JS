@@ -186,7 +186,7 @@ td:hover {
   /* animation: display_data 2s ease; */
 }
 
-.data_display div{
+.data_display_item{
   width: 100%;
   
 }
@@ -224,21 +224,6 @@ td:hover {
 .data_display_div_description span{
   margin-left: 10px;
 }
-
-/* .data_display_title{
-  color: lightsalmon;
-  font-size: 21px;
-  font-weight: bold;
-}
-.data_display_time{
-  color: lightskyblue;
-  font-size: 21px;
-}
-.data_display_description{
-  font-size: 20px;
-  color: black;  
-} */
-
 
 .other_month {
   background: none;
@@ -328,7 +313,7 @@ button:last-child img{
   height: 40px;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: space-between;
 }
 
 .close_button span{

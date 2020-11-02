@@ -140,7 +140,6 @@ function load_table_style() {
     change_background_color_if_weekend(x);
     change_background_color_if_today(x);
   }
-  add_schedule_event();
 }
 
 // Populates a row.
@@ -207,57 +206,85 @@ function populate_table(date_year, date_month) {
     }
   }
   load_table_style();
+  add_schedule_event();
 }
 
 function add_schedule_event() {
   const table = document.getElementById("days");
-  const pop_up = document.getElementById("add_schedule");
   for (let i = 1; i < 7; i++) {
     for (let x = 0; x < 7; x++) {
       table.rows[i].cells[x].addEventListener("click", () => {
-        console.log("Row number: " + i + "\nCell number: " + x);
-        pop_up.classList.remove("schedule_close");
-        pop_up.classList.add("schedule_display");
-        save_schedule(table.rows[i].cells[x].innerText);
-        close_schedule();
+        add_new_schedule(table.rows[i].cells[x].innerText);
       });
     }
   }
 }
 
-function close_schedule() {
-  const close_button = document.getElementById("close_schedule_form");
+function show_pop_up() {
   const pop_up = document.getElementById("add_schedule");
-  close_button.addEventListener("click", () => {
-    pop_up.classList.add("schedule_close");
-    setTimeout(() => {
-      pop_up.classList.remove("schedule_display");
-    }, 300);
-  });
+  pop_up.classList.remove("schedule_close");
+  pop_up.classList.add("schedule_display");
 }
 
-function save_schedule(day) {
-  const button = document.getElementById("save_schedule");
-  button.addEventListener("click", () => {
-    const input_initial_time = document.getElementById("schedule_initial_time");
-    const input_final_time = document.getElementById("schedule_ending_time");
+function close_pop_up() {
+  const pop_up = document.getElementById("add_schedule");
+  pop_up.classList.add("schedule_close");
+  pop_up.classList.remove("schedule_display");
+}
+
+function add_new_schedule(day) {
+  show_pop_up();
+  const confirm_button = document.getElementById("save_schedule");
+  const exit_button = document.getElementById("close_pop_up");
+  const date = document.getElementById("day");
+  date.innerText = "Add event on day:" + day;
+  console.log(day);
+  // ADD a list system that starts in the smallest day, and shows the irformation of the
+  // current month.
+  confirm_button.addEventListener("click", () => {
+    console.log(day);
     const input_title = document.getElementById("schedule_title");
+    const input_init_time = document.getElementById("schedule_initial_time");
+    const input_final_time = document.getElementById("schedule_final_time");
     const input_description = document.getElementById("schedule_description");
-    const display_title = document.getElementById("data_display_title");
-    const display_time = document.getElementById("data_display_time");
-    const display_description = document.getElementById(
-      "data_display_description"
-    );
-    // ADD a list system that starts in the smallest day, and shows the irformation of the
-    // current month.
-    if (input_title.value !== "") {
-      display_title.innerText = "⬤ " + day + ": " + input_title.value;
-      display_time.innerText =
-        input_initial_time.value + " - " + input_final_time.value;
-      display_description.innerText = input_description.value;
+    if (input_title.value !== "") {    
+      const data_display = document.getElementById("data_display");
+      // Create
+      const data_item = document.createElement("div");
+      const title_div = document.createElement("div");
+      const span_title = document.createElement("span");
+      const span_time = document.createElement("span");
+      const description_div = document.createElement("div");
+      const span_description = document.createElement("span");
+      // Add class
+      data_item.classList.add("data_display_item");
+      title_div.classList.add("data_display_div_title");
+      description_div.classList.add("data_display_div_description");
+      // Append child
+      data_display.appendChild(data_item);
+      data_item.appendChild(title_div);
+      data_item.appendChild(description_div);
+      title_div.appendChild(span_title);
+      title_div.appendChild(span_time);
+      description_div.appendChild(span_description);
+      // Values
+      span_title.innerText = "⬤ " + day + ": " + input_title.value;
+      span_time.innerText =
+        input_init_time.value + " - " + input_final_time.value;
+      span_description.innerText = input_description.value;
+      // Clean fields
+      input_title.value = "";
+      input_init_time.value = "00:00";
+      input_final_time.value = "23:59";
+      input_description.value = "";
+      close_pop_up();
     } else {
       input_title.style.borderBottom = "2px red solid";
+      // Instead add an animation...
     }
+  });
+  exit_button.addEventListener("click", () => {
+    close_pop_up();
   });
 }
 

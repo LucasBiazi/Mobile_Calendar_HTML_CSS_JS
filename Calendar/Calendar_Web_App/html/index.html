@@ -10,7 +10,8 @@
   <body>
     <div id="add_schedule" class="hide_pop_up">
       <div class="close_button">
-        <span id="close_schedule_form">X</span>
+        <span id="day"></span>
+        <span id="close_pop_up">X</span>
       </div>
       <form id="pop_up">
         <div class="schedule_time_div">
@@ -19,8 +20,8 @@
             <input id="schedule_initial_time" type="time" value="00:00" />
           </div>
           <div class="schedule_time_div_2">
-            <label for="schedule_ending_time">Ending at:</label>
-            <input id="schedule_ending_time" type="time" value="23:59" />
+            <label for="schedule_final_time">Ending at:</label>
+            <input id="schedule_final_time" type="time" value="23:59" />
           </div>
         </div>
         <div class="schedule_title_div">
@@ -66,17 +67,7 @@
             </tr>
           </table>
         </div>
-        <div id="data_display" class="data_display">
-          <div>
-            <div class="data_display_div_title">
-              <span id="data_display_title"></span>
-              <span id="data_display_time"></span>
-            </div>
-            <div class="data_display_div_description">
-              <span id="data_display_description"></span>
-            </div>
-          </div>
-        </div>
+        <div id="data_display" class="data_display"></div>
       </div>
       <div class="buttons">
         <button id="back_button">
