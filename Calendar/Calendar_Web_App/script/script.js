@@ -212,7 +212,6 @@ function populate_table(date_year, date_month) {
 function add_schedule_event() {
   const table = document.getElementById("days");
   const pop_up = document.getElementById("add_schedule");
-  const close_button = document.getElementById("close_schedule_form");
   for (let i = 1; i < 7; i++) {
     for (let x = 0; x < 7; x++) {
       table.rows[i].cells[x].addEventListener("click", () => {
@@ -220,42 +219,45 @@ function add_schedule_event() {
         pop_up.classList.remove("schedule_close");
         pop_up.classList.add("schedule_display");
         save_schedule(table.rows[i].cells[x].innerText);
-        // ADD a list system that starts in the smallest day, and shows the irformation of the
-        // current month.
-        // Required On title!
-        // Close after confirming!
-        // Clean code.
-        close_button.addEventListener("click", () => {
-          pop_up.classList.add("schedule_close");
-          setTimeout(() => {
-            pop_up.classList.remove("schedule_display");
-          }, 300);
-        });
+        close_schedule();
       });
     }
   }
 }
 
+function close_schedule() {
+  const close_button = document.getElementById("close_schedule_form");
+  const pop_up = document.getElementById("add_schedule");
+  close_button.addEventListener("click", () => {
+    pop_up.classList.add("schedule_close");
+    setTimeout(() => {
+      pop_up.classList.remove("schedule_display");
+    }, 300);
+  });
+}
+
 function save_schedule(day) {
   const button = document.getElementById("save_schedule");
   button.addEventListener("click", () => {
-    const initial_time = document.getElementById("schedule_initial_time").value;
-    const final_time = document.getElementById("schedule_ending_time").value;
-    const title = document.getElementById("schedule_title").value;
-    const description = document.getElementById("schedule_description").value;
-    const data_display = document.getElementById("data_display_p");
-
-    data_display.innerText =
-      "\n" +
-      "On day: " +
-      day +
-      title +
-      " " +
-      initial_time +
-      " - " +
-      final_time +
-      "\n" +
-      description;
+    const input_initial_time = document.getElementById("schedule_initial_time");
+    const input_final_time = document.getElementById("schedule_ending_time");
+    const input_title = document.getElementById("schedule_title");
+    const input_description = document.getElementById("schedule_description");
+    const display_title = document.getElementById("data_display_title");
+    const display_time = document.getElementById("data_display_time");
+    const display_description = document.getElementById(
+      "data_display_description"
+    );
+    // ADD a list system that starts in the smallest day, and shows the irformation of the
+    // current month.
+    if (input_title.value !== "") {
+      display_title.innerText = "⬤ " + day + ": " + input_title.value;
+      display_time.innerText =
+        input_initial_time.value + " - " + input_final_time.value;
+      display_description.innerText = input_description.value;
+    } else {
+      input_title.style.borderBottom = "2px red solid";
+    }
   });
 }
 

@@ -187,11 +187,42 @@ td:hover {
 }
 
 .data_display div{
+  width: 100%;
+  
+}
+
+.data_display_div_title{
   display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 20px;
+}
+
+.data_display_div_title :first-child{
+  margin-left: 5px;
+  }
+
+
+.data_display_div_title :last-child{
+    margin-right: 10px;
+    background-color: lightsalmon;
+    border-radius: 5px;
+  }
+
+.data_display_div_description {
+  display: flex;
+  width: 100%;
   flex-wrap: wrap;
-  width: 85%;
-  padding: 20px;
-  background-color: lightgray;
+  font-size: 17px;
+  color: black;
+}
+
+.data_display_div_description span{
+  margin-left: 10px;
 }
 
 /* .data_display_title{
