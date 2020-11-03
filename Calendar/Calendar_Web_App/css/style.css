@@ -219,11 +219,16 @@ td:hover {
   flex-wrap: wrap;
   font-size: 17px;
   color: black;
+  margin-bottom: 5px;
 }
 
 .data_display_div_description span{
   margin-left: 10px;
 }
+
+.schedule_day{
+  background-color: rgba(112, 203, 255, 0.349);
+} 
 
 .other_month {
   background: none;

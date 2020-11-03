@@ -208,10 +208,14 @@ function populate_table(date_year, date_month) {
   load_table_style();
 }
 
-function open_pop_up() {
+function open_pop_up(day) {
   const pop_up = document.getElementById("add_schedule");
+  const schedule_day_message = document.getElementById("schedule_top_message");
+  const schedule_day = document.getElementById("schedule_day");
   pop_up.classList.remove("schedule_close");
   pop_up.classList.add("schedule_display");
+  schedule_day_message.innerText = "New event on day ";
+  schedule_day.innerText = day;
 }
 
 function close_pop_up() {
@@ -220,34 +224,15 @@ function close_pop_up() {
   pop_up.classList.remove("schedule_display");
 }
 
-function add_schedule_event() {
-  const table = document.getElementById("days");
-  for (let i = 1; i < 7; i++) {
-    for (let x = 0; x < 7; x++) {
-      table.rows[i].cells[x].addEventListener("click", () => {
-        console.log("Row: " + i + "\nCell: " + x);
-        add_new_schedule(table.rows[i].cells[x].innerText);
-      });
-    }
-  }
-}
-
-
-function add_new_schedule(day) {
-  open_pop_up();
+function load_pop_up_confirm_button() {
   const confirm_button = document.getElementById("save_schedule");
-  const exit_button = document.getElementById("close_pop_up");
-  const date = document.getElementById("day");
-  date.innerText = "Add event on day:" + day;
-  console.log(day);
-  // ADD a list system that starts in the smallest day, and shows the irformation of the
-  // current month.
   confirm_button.addEventListener("click", () => {
-    console.log(day);
+    console.log("Execution times.");
     const input_title = document.getElementById("schedule_title");
 
     if (input_title.value !== "") {
       // Create
+      const schedule_day = document.getElementById("schedule_day");
       const data_display = document.getElementById("data_display");
       const input_init_time = document.getElementById("schedule_initial_time");
       const input_final_time = document.getElementById("schedule_final_time");
@@ -270,7 +255,7 @@ function add_new_schedule(day) {
       title_div.appendChild(span_time);
       description_div.appendChild(span_description);
       // Values
-      span_title.innerText = "⬤ " + day + ": " + input_title.value;
+      span_title.innerText = "⬤ " + schedule_day.innerText + ": " + input_title.value;
       span_time.innerText =
         input_init_time.value + " - " + input_final_time.value;
       span_description.innerText = input_description.value;
@@ -279,15 +264,36 @@ function add_new_schedule(day) {
       input_init_time.value = "00:00";
       input_final_time.value = "23:59";
       input_description.value = "";
+
       close_pop_up();
-    } else {
-      input_title.style.borderBottom = "2px red solid";
-      // Instead add an animation...
+      return;
     }
+    input_title.style.borderBottom = "2px red solid";
   });
+}
+function load_pop_up_close_button() {
+  const exit_button = document.getElementById("close_pop_up");
   exit_button.addEventListener("click", () => {
     close_pop_up();
   });
+}
+
+function add_schedule_event_to_cells() {
+  const table = document.getElementById("days");
+  for (let i = 1; i < 7; i++) {
+    for (let x = 0; x < 7; x++) {
+      table.rows[i].cells[x].addEventListener("click", () => {
+        open_pop_up(table.rows[i].cells[x].innerText);
+      });
+    }
+  }
+}
+
+function add_new_schedule_event() {
+  open_pop_up();
+  // ADD a list system that starts in the smallest day, and shows the irformation of the
+  // current month.
+  // Everytime I click I'm adding an eventListener.
 }
 
 // Loads today's data.
@@ -295,7 +301,6 @@ function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
   populate_table(new Date().getFullYear(), new Date().getMonth());
-  add_schedule_event();
 }
 
 // Loads buttons.
@@ -323,6 +328,9 @@ function load_buttons() {
     print_year_and_month(table_date.year, table_date.month);
     populate_table(table_date.year, table_date.month);
   });
+  add_schedule_event_to_cells();
+  load_pop_up_close_button();
+  load_pop_up_confirm_button();
 }
 
 // Loads main function as soon as the raw html loads.
