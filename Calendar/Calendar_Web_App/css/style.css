@@ -321,6 +321,11 @@ button:last-child img{
   justify-content: space-between;
 }
 
+.close_button :first-child{
+  margin-left: 15px;
+  margin-top: 50px;
+}
+
 .close_button span{
   font-size: 25px;
   margin-right: 10px;

@@ -226,12 +226,10 @@ function close_pop_up() {
 
 function load_pop_up_confirm_button() {
   const confirm_button = document.getElementById("save_schedule");
-  confirm_button.addEventListener("click", () => {
-    console.log("Execution times.");
+  confirm_button.addEventListener("click", () => {   
     const input_title = document.getElementById("schedule_title");
-
     if (input_title.value !== "") {
-      // Create
+      // Create      
       const schedule_day = document.getElementById("schedule_day");
       const data_display = document.getElementById("data_display");
       const input_init_time = document.getElementById("schedule_initial_time");
@@ -264,13 +262,13 @@ function load_pop_up_confirm_button() {
       input_init_time.value = "00:00";
       input_final_time.value = "23:59";
       input_description.value = "";
-
       close_pop_up();
       return;
     }
     input_title.style.borderBottom = "2px red solid";
   });
 }
+
 function load_pop_up_close_button() {
   const exit_button = document.getElementById("close_pop_up");
   exit_button.addEventListener("click", () => {
