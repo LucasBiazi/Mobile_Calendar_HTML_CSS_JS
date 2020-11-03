@@ -208,6 +208,17 @@ function populate_table(date_year, date_month) {
   load_table_style();
 }
 
+function add_schedule_event_to_cells() {
+  const table = document.getElementById("days");
+  for (let i = 1; i < 7; i++) {
+    for (let x = 0; x < 7; x++) {
+      table.rows[i].cells[x].addEventListener("click", () => {
+        open_pop_up(table.rows[i].cells[x].innerText);
+      });
+    }
+  }
+}
+
 function open_pop_up(day) {
   const pop_up = document.getElementById("add_schedule");
   const schedule_day_message = document.getElementById("schedule_top_message");
@@ -226,10 +237,10 @@ function close_pop_up() {
 
 function load_pop_up_confirm_button() {
   const confirm_button = document.getElementById("save_schedule");
-  confirm_button.addEventListener("click", () => {   
+  confirm_button.addEventListener("click", () => {
     const input_title = document.getElementById("schedule_title");
     if (input_title.value !== "") {
-      // Create      
+      // Create
       const schedule_day = document.getElementById("schedule_day");
       const data_display = document.getElementById("data_display");
       const input_init_time = document.getElementById("schedule_initial_time");
@@ -253,7 +264,8 @@ function load_pop_up_confirm_button() {
       title_div.appendChild(span_time);
       description_div.appendChild(span_description);
       // Values
-      span_title.innerText = "⬤ " + schedule_day.innerText + ": " + input_title.value;
+      span_title.innerText =
+        "⬤ " + schedule_day.innerText + ": " + input_title.value;
       span_time.innerText =
         input_init_time.value + " - " + input_final_time.value;
       span_description.innerText = input_description.value;
@@ -274,24 +286,6 @@ function load_pop_up_close_button() {
   exit_button.addEventListener("click", () => {
     close_pop_up();
   });
-}
-
-function add_schedule_event_to_cells() {
-  const table = document.getElementById("days");
-  for (let i = 1; i < 7; i++) {
-    for (let x = 0; x < 7; x++) {
-      table.rows[i].cells[x].addEventListener("click", () => {
-        open_pop_up(table.rows[i].cells[x].innerText);
-      });
-    }
-  }
-}
-
-function add_new_schedule_event() {
-  open_pop_up();
-  // ADD a list system that starts in the smallest day, and shows the irformation of the
-  // current month.
-  // Everytime I click I'm adding an eventListener.
 }
 
 // Loads today's data.
