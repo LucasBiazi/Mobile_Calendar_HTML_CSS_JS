@@ -208,17 +208,6 @@ function populate_table(date_year, date_month) {
   load_table_style();
 }
 
-function add_schedule_event_to_cells() {
-  const table = document.getElementById("days");
-  for (let i = 1; i < 7; i++) {
-    for (let x = 0; x < 7; x++) {
-      table.rows[i].cells[x].addEventListener("click", () => {
-        open_pop_up(table.rows[i].cells[x].innerText);
-      });
-    }
-  }
-}
-
 function open_pop_up(day) {
   const pop_up = document.getElementById("add_schedule");
   const schedule_day_message = document.getElementById("schedule_top_message");
@@ -231,15 +220,11 @@ function open_pop_up(day) {
 
 function load_pop_up_close_button() {
   const exit_button = document.getElementById("close_pop_up");
-  exit_button.addEventListener("click", () => {
-    close_pop_up();
-  });
-}
-
-function close_pop_up() {
   const pop_up = document.getElementById("add_schedule");
-  pop_up.classList.add("schedule_close");
-  pop_up.classList.remove("schedule_display");
+  exit_button.addEventListener("click", () => {
+    pop_up.classList.add("schedule_close");
+    pop_up.classList.remove("schedule_display");
+  });
 }
 
 function load_pop_up_confirm_button() {
@@ -288,7 +273,16 @@ function load_pop_up_confirm_button() {
   });
 }
 
-
+function add_schedule_event_to_cells() {
+  const table = document.getElementById("days");
+  for (let i = 1; i < 7; i++) {
+    for (let x = 0; x < 7; x++) {
+      table.rows[i].cells[x].addEventListener("click", () => {
+        open_pop_up(table.rows[i].cells[x].innerText);
+      });
+    }
+  }
+}
 
 // Loads today's data.
 function main() {
