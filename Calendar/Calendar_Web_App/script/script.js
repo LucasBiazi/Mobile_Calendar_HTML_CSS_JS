@@ -212,83 +212,83 @@ function add_schedule_event_to_cells() {
   const table = document.getElementById("days");
   for (let i = 1; i < 7; i++) {
     for (let x = 0; x < 7; x++) {
-      table.rows[i].cells[x].addEventListener("click", () => {
-        open_pop_up(table.rows[i].cells[x].innerText);
-      });
+      table.rows[i].cells[x].addEventListener("click", load_pop_up);
     }
   }
 }
 
-function open_pop_up(day) {
+function load_pop_up() {
   const pop_up = document.getElementById("add_schedule");
   const schedule_day_message = document.getElementById("schedule_top_message");
-  const schedule_day = document.getElementById("schedule_day");
   pop_up.classList.remove("schedule_close");
   pop_up.classList.add("schedule_display");
-  schedule_day_message.innerText = "New event on day ";
-  schedule_day.innerText = day;
+  schedule_day_message.innerText = "New event on day x";
+  load_pop_up_close_button();
+  load_pop_up_confirm_button();
 }
 
 function load_pop_up_close_button() {
   const exit_button = document.getElementById("close_pop_up");
-  exit_button.addEventListener("click", () => {
-    close_pop_up();
-  });
+  exit_button.addEventListener("click", close_pop_up);
+}
+
+function load_pop_up_confirm_button() {
+  const confirm_button = document.getElementById("save_schedule");
+  confirm_button.addEventListener("click", add_item);
 }
 
 function close_pop_up() {
   const pop_up = document.getElementById("add_schedule");
   pop_up.classList.add("schedule_close");
   pop_up.classList.remove("schedule_display");
-}
-
-function load_pop_up_confirm_button() {
+  const exit_button = document.getElementById("close_pop_up");
+  exit_button.removeEventListener("click", close_pop_up);
   const confirm_button = document.getElementById("save_schedule");
-  confirm_button.addEventListener("click", () => {
-    const input_title = document.getElementById("schedule_title");
-    if (input_title.value !== "") {
-      // Create
-      const schedule_day = document.getElementById("schedule_day");
-      const data_display = document.getElementById("data_display");
-      const input_init_time = document.getElementById("schedule_initial_time");
-      const input_final_time = document.getElementById("schedule_final_time");
-      const input_description = document.getElementById("schedule_description");
-      const data_item = document.createElement("div");
-      const title_div = document.createElement("div");
-      const span_title = document.createElement("span");
-      const span_time = document.createElement("span");
-      const description_div = document.createElement("div");
-      const span_description = document.createElement("span");
-      // Add class
-      data_item.classList.add("data_display_item");
-      title_div.classList.add("data_display_div_title");
-      description_div.classList.add("data_display_div_description");
-      // Append child
-      data_display.appendChild(data_item);
-      data_item.appendChild(title_div);
-      data_item.appendChild(description_div);
-      title_div.appendChild(span_title);
-      title_div.appendChild(span_time);
-      description_div.appendChild(span_description);
-      // Values
-      span_title.innerText =
-        "⬤ " + schedule_day.innerText + ": " + input_title.value;
-      span_time.innerText =
-        input_init_time.value + " - " + input_final_time.value;
-      span_description.innerText = input_description.value;
-      // Clean fields
-      input_title.value = "";
-      input_init_time.value = "00:00";
-      input_final_time.value = "23:59";
-      input_description.value = "";
-      close_pop_up();
-      return;
-    }
-    input_title.style.borderBottom = "2px red solid";
-  });
+  confirm_button.removeEventListener("click", add_item);
 }
 
-
+function add_item() {
+  const input_title = document.getElementById("schedule_title");
+  if (input_title.value !== "") {
+    // Create
+    const schedule_day = document.getElementById("schedule_day");
+    const data_display = document.getElementById("data_display");
+    const input_init_time = document.getElementById("schedule_initial_time");
+    const input_final_time = document.getElementById("schedule_final_time");
+    const input_description = document.getElementById("schedule_description");
+    const data_item = document.createElement("div");
+    const title_div = document.createElement("div");
+    const span_title = document.createElement("span");
+    const span_time = document.createElement("span");
+    const description_div = document.createElement("div");
+    const span_description = document.createElement("span");
+    // Add class
+    data_item.classList.add("data_display_item");
+    title_div.classList.add("data_display_div_title");
+    description_div.classList.add("data_display_div_description");
+    // Append child
+    data_display.appendChild(data_item);
+    data_item.appendChild(title_div);
+    data_item.appendChild(description_div);
+    title_div.appendChild(span_title);
+    title_div.appendChild(span_time);
+    description_div.appendChild(span_description);
+    // Values
+    span_title.innerText =
+      "⬤ " + schedule_day.innerText + ": " + input_title.value;
+    span_time.innerText =
+      input_init_time.value + " - " + input_final_time.value;
+    span_description.innerText = input_description.value;
+    // Clean fields
+    input_title.value = "";
+    input_init_time.value = "00:00";
+    input_final_time.value = "23:59";
+    input_description.value = "";
+    close_pop_up();
+    return;
+  }
+  input_title.style.borderBottom = "2px red solid";
+}
 
 // Loads today's data.
 function main() {
@@ -323,8 +323,6 @@ function load_buttons() {
     populate_table(table_date.year, table_date.month);
   });
   add_schedule_event_to_cells();
-  load_pop_up_close_button();
-  load_pop_up_confirm_button();
 }
 
 // Loads main function as soon as the raw html loads.
