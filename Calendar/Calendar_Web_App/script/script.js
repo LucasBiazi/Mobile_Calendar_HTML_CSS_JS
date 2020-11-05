@@ -225,25 +225,31 @@ function remove_EL_confirm_button() {
   confirm_button.removeEventListener("click", add_item);
 }
 
-function get_clicked_cell_data(row, cell, value, cell_color) {
+function get_clicked_cell_data(row, cell, value, cell_class) {
   const cell_data = {
     row: row,
     cell: cell,
     value: value,
-    cell_color: cell_color,
+    cell_class: cell_class,
   };
   return cell_data;
 }
 
-function open_pop_up() {
+function open_pop_up(row, cell, value, cell_class) {
+  const cell_data = get_clicked_cell_data(row, cell, value, cell_class);
+  if (cell_data.cell_class === "other_month")
+    if (cell_data.value > 14) previous_month();
+    else next_month();
+
   const pop_up = document.getElementById("add_schedule");
   const schedule_day_message = document.getElementById("schedule_top_message");
   pop_up.classList.remove("schedule_close");
   pop_up.classList.add("schedule_display");
-  schedule_day_message.innerText = "New event on day ";
+  schedule_day_message.innerText = "New event on day " + value;
   add_EL_close_button();
   add_EL_confirm_button();
 }
+
 function close_pop_up() {
   const pop_up = document.getElementById("add_schedule");
   pop_up.classList.add("schedule_close");
@@ -298,7 +304,14 @@ function add_open_pop_up_button_to_cells() {
   const table = document.getElementById("days");
   for (let i = 1; i < 7; i++) {
     for (let x = 0; x < 7; x++) {
-      table.rows[i].cells[x].addEventListener("click", open_pop_up);
+      table.rows[i].cells[x].addEventListener("click", () => {
+        open_pop_up(
+          i,
+          x,
+          table.rows[i].cells[x].innerText,
+          table.rows[i].cells[x].className
+        );
+      });
     }
   }
 }
@@ -309,31 +322,39 @@ function main() {
   populate_table(new Date().getFullYear(), new Date().getMonth());
 }
 
+function previous_month() {
+  let table_date = get_table_date();
+  reset_table_data_style();
+  table_date.month -= 1;
+  print_year_and_month(table_date.year, table_date.month);
+  populate_table(table_date.year, table_date.month);
+}
+
+function current_month() {
+  let table_date = get_table_date();
+  reset_table_data_style();
+  table_date = date_object(new Date().getFullYear(), new Date().getMonth());
+  print_year_and_month(new Date().getFullYear(), new Date().getMonth());
+  populate_table(new Date().getFullYear(), new Date().getMonth());
+}
+
+function next_month() {
+  let table_date = get_table_date();
+  reset_table_data_style();
+  table_date.month += 1;
+  print_year_and_month(table_date.year, table_date.month);
+  populate_table(table_date.year, table_date.month);
+}
+
 // Loads buttons.
 function load_buttons() {
   const back_button = document.getElementById("back_button");
   const t_button = document.getElementById("t_button");
   const next_button = document.getElementById("next_button");
-  let table_date = get_table_date();
 
-  back_button.addEventListener("click", () => {
-    reset_table_data_style();
-    table_date.month -= 1;
-    print_year_and_month(table_date.year, table_date.month);
-    populate_table(table_date.year, table_date.month);
-  });
-  t_button.addEventListener("click", () => {
-    reset_table_data_style();
-    table_date = date_object(new Date().getFullYear(), new Date().getMonth());
-    print_year_and_month(new Date().getFullYear(), new Date().getMonth());
-    populate_table(new Date().getFullYear(), new Date().getMonth());
-  });
-  next_button.addEventListener("click", () => {
-    reset_table_data_style();
-    table_date.month += 1;
-    print_year_and_month(table_date.year, table_date.month);
-    populate_table(table_date.year, table_date.month);
-  });
+  back_button.addEventListener("click", previous_month);
+  t_button.addEventListener("click", current_month);
+  next_button.addEventListener("click", next_month);
   add_open_pop_up_button_to_cells();
 }
 
