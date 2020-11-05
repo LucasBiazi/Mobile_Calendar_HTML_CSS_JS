@@ -223,28 +223,33 @@ function load_pop_up() {
   pop_up.classList.remove("schedule_close");
   pop_up.classList.add("schedule_display");
   schedule_day_message.innerText = "New event on day x";
-  load_pop_up_close_button();
-  load_pop_up_confirm_button();
+  add_EL_close_button();
+  add_EL_confirm_button();
 }
 
-function load_pop_up_close_button() {
+function add_EL_close_button() {
   const exit_button = document.getElementById("close_pop_up");
   exit_button.addEventListener("click", close_pop_up);
 }
-
-function load_pop_up_confirm_button() {
+function add_EL_confirm_button() {
   const confirm_button = document.getElementById("save_schedule");
   confirm_button.addEventListener("click", add_item);
+}
+function remove_EL_close_button() {
+  const exit_button = document.getElementById("close_pop_up");
+  exit_button.removeEventListener("click", close_pop_up);
+}
+function remove_EL_confirm_button() {
+  const confirm_button = document.getElementById("save_schedule");
+  confirm_button.removeEventListener("click", add_item);
 }
 
 function close_pop_up() {
   const pop_up = document.getElementById("add_schedule");
   pop_up.classList.add("schedule_close");
   pop_up.classList.remove("schedule_display");
-  const exit_button = document.getElementById("close_pop_up");
-  exit_button.removeEventListener("click", close_pop_up);
-  const confirm_button = document.getElementById("save_schedule");
-  confirm_button.removeEventListener("click", add_item);
+  remove_EL_close_button();
+  remove_EL_confirm_button();
 }
 
 function add_item() {
