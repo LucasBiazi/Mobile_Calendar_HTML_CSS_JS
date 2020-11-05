@@ -229,6 +229,13 @@ function open_pop_up(day) {
   schedule_day.innerText = day;
 }
 
+function load_pop_up_close_button() {
+  const exit_button = document.getElementById("close_pop_up");
+  exit_button.addEventListener("click", () => {
+    close_pop_up();
+  });
+}
+
 function close_pop_up() {
   const pop_up = document.getElementById("add_schedule");
   pop_up.classList.add("schedule_close");
@@ -281,12 +288,7 @@ function load_pop_up_confirm_button() {
   });
 }
 
-function load_pop_up_close_button() {
-  const exit_button = document.getElementById("close_pop_up");
-  exit_button.addEventListener("click", () => {
-    close_pop_up();
-  });
-}
+
 
 // Loads today's data.
 function main() {
