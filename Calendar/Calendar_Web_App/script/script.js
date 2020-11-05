@@ -208,25 +208,6 @@ function populate_table(date_year, date_month) {
   load_table_style();
 }
 
-function add_schedule_event_to_cells() {
-  const table = document.getElementById("days");
-  for (let i = 1; i < 7; i++) {
-    for (let x = 0; x < 7; x++) {
-      table.rows[i].cells[x].addEventListener("click", load_pop_up);
-    }
-  }
-}
-
-function load_pop_up() {
-  const pop_up = document.getElementById("add_schedule");
-  const schedule_day_message = document.getElementById("schedule_top_message");
-  pop_up.classList.remove("schedule_close");
-  pop_up.classList.add("schedule_display");
-  schedule_day_message.innerText = "New event on day x";
-  add_EL_close_button();
-  add_EL_confirm_button();
-}
-
 function add_EL_close_button() {
   const exit_button = document.getElementById("close_pop_up");
   exit_button.addEventListener("click", close_pop_up);
@@ -244,6 +225,25 @@ function remove_EL_confirm_button() {
   confirm_button.removeEventListener("click", add_item);
 }
 
+function get_clicked_cell_data(row, cell, value, cell_color) {
+  const cell_data = {
+    row: row,
+    cell: cell,
+    value: value,
+    cell_color: cell_color,
+  };
+  return cell_data;
+}
+
+function open_pop_up() {
+  const pop_up = document.getElementById("add_schedule");
+  const schedule_day_message = document.getElementById("schedule_top_message");
+  pop_up.classList.remove("schedule_close");
+  pop_up.classList.add("schedule_display");
+  schedule_day_message.innerText = "New event on day ";
+  add_EL_close_button();
+  add_EL_confirm_button();
+}
 function close_pop_up() {
   const pop_up = document.getElementById("add_schedule");
   pop_up.classList.add("schedule_close");
@@ -294,7 +294,14 @@ function add_item() {
   }
   input_title.style.borderBottom = "2px red solid";
 }
-
+function add_open_pop_up_button_to_cells() {
+  const table = document.getElementById("days");
+  for (let i = 1; i < 7; i++) {
+    for (let x = 0; x < 7; x++) {
+      table.rows[i].cells[x].addEventListener("click", open_pop_up);
+    }
+  }
+}
 // Loads today's data.
 function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
@@ -327,7 +334,7 @@ function load_buttons() {
     print_year_and_month(table_date.year, table_date.month);
     populate_table(table_date.year, table_date.month);
   });
-  add_schedule_event_to_cells();
+  add_open_pop_up_button_to_cells();
 }
 
 // Loads main function as soon as the raw html loads.
