@@ -106,10 +106,10 @@ function reset_table_data_style() {
 const change_background_color_if_weekend = (row_number) => {
   const table = document.getElementById("days");
   if (table.rows[row_number].cells[6].classList == "td") {
-    table.rows[row_number].cells[6].style.color = "lightsalmon";
+    table.rows[row_number].cells[6].classList.add("weekend");
   }
   if (table.rows[row_number].cells[0].classList == "td") {
-    table.rows[row_number].cells[0].style.color = "lightsalmon";
+    table.rows[row_number].cells[0].classList.add("weekend");
   }
 };
 
