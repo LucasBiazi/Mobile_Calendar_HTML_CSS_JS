@@ -232,16 +232,16 @@ function next_month() {
 }
 
 function add_EL_close_button() {
-  const exit_button = document.getElementById("close_pop_up");
-  exit_button.addEventListener("click", close_pop_up);
+  const exit_button = document.getElementById("close_form");
+  exit_button.addEventListener("click", close_form);
 }
 function add_EL_confirm_button() {
   const confirm_button = document.getElementById("save_schedule");
   confirm_button.addEventListener("click", add_item);
 }
 function remove_EL_close_button() {
-  const exit_button = document.getElementById("close_pop_up");
-  exit_button.removeEventListener("click", close_pop_up);
+  const exit_button = document.getElementById("close_form");
+  exit_button.removeEventListener("click", close_form);
 }
 function remove_EL_confirm_button() {
   const confirm_button = document.getElementById("save_schedule");
@@ -265,7 +265,7 @@ function open_pop_up(row, cell, value, cell_class) {
     else next_month();
 
   const pop_up = document.getElementById("add_schedule");
-  const schedule_day_message = document.getElementById("schedule_top_message");
+  const schedule_day_message = document.getElementById("form_top_message");
   pop_up.classList.remove("schedule_close");
   pop_up.classList.add("schedule_display");
   schedule_day_message.innerText = "New event on day " + value;
@@ -273,7 +273,7 @@ function open_pop_up(row, cell, value, cell_class) {
   add_EL_confirm_button();
 }
 
-function close_pop_up() {
+function close_form() {
   const pop_up = document.getElementById("add_schedule");
   pop_up.classList.add("schedule_close");
   pop_up.classList.remove("schedule_display");
@@ -318,7 +318,7 @@ function add_item() {
     input_init_time.value = "00:00";
     input_final_time.value = "23:59";
     input_description.value = "";
-    close_pop_up();
+    close_form();
     return;
   }
   input_title.style.borderBottom = "2px red solid";

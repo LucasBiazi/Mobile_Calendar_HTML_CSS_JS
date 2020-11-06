@@ -288,7 +288,7 @@ button:last-child img{
   height: 35px"
 }
 
-.hide_pop_up{
+.hide_form{
   display: none;
 
 }
@@ -373,7 +373,7 @@ input{
   height: 50px;
 }
 
-.schedule_time_div_2{
+.schedule_time_div div{
   display: flex;
   flex-direction: column;
   justify-content: space-between;
