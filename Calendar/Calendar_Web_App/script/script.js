@@ -207,6 +207,29 @@ function populate_table(date_year, date_month) {
   }
   load_table_style();
 }
+function previous_month() {
+  let table_date = get_table_date();
+  reset_table_data_style();
+  table_date.month -= 1;
+  print_year_and_month(table_date.year, table_date.month);
+  populate_table(table_date.year, table_date.month);
+}
+
+function current_month() {
+  let table_date = get_table_date();
+  reset_table_data_style();
+  table_date = date_object(new Date().getFullYear(), new Date().getMonth());
+  print_year_and_month(new Date().getFullYear(), new Date().getMonth());
+  populate_table(new Date().getFullYear(), new Date().getMonth());
+}
+
+function next_month() {
+  let table_date = get_table_date();
+  reset_table_data_style();
+  table_date.month += 1;
+  print_year_and_month(table_date.year, table_date.month);
+  populate_table(table_date.year, table_date.month);
+}
 
 function add_EL_close_button() {
   const exit_button = document.getElementById("close_pop_up");
@@ -320,30 +343,6 @@ function main() {
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   create_table();
   populate_table(new Date().getFullYear(), new Date().getMonth());
-}
-
-function previous_month() {
-  let table_date = get_table_date();
-  reset_table_data_style();
-  table_date.month -= 1;
-  print_year_and_month(table_date.year, table_date.month);
-  populate_table(table_date.year, table_date.month);
-}
-
-function current_month() {
-  let table_date = get_table_date();
-  reset_table_data_style();
-  table_date = date_object(new Date().getFullYear(), new Date().getMonth());
-  print_year_and_month(new Date().getFullYear(), new Date().getMonth());
-  populate_table(new Date().getFullYear(), new Date().getMonth());
-}
-
-function next_month() {
-  let table_date = get_table_date();
-  reset_table_data_style();
-  table_date.month += 1;
-  print_year_and_month(table_date.year, table_date.month);
-  populate_table(table_date.year, table_date.month);
 }
 
 // Loads buttons.
