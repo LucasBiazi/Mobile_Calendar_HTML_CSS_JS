@@ -98,6 +98,7 @@ function reset_table_data_style() {
       table.rows[i].cells[x].style.background = "";
       table.rows[i].cells[x].classList.remove("td");
       table.rows[i].cells[x].classList.remove("other_month");
+      table.rows[i].cells[x].classList.remove("scheduled_day");
     }
   }
 }
@@ -265,10 +266,12 @@ function open_form(row, cell, value, cell_class) {
     else next_month();
 
   const pop_up = document.getElementById("add_schedule");
-  const schedule_day_message = document.getElementById("form_top_message");
   pop_up.classList.remove("schedule_close");
   pop_up.classList.add("schedule_display");
-  schedule_day_message.innerText = "New event on day " + value;
+  const span_message = document.getElementById("form_top_message");
+  const span_day = document.getElementById("clicked_day");
+  span_message.innerText = "New event on day: ";
+  span_day.innerText = value;
   add_EL_close_button();
   add_EL_confirm_button();
 }
@@ -281,43 +284,62 @@ function close_form() {
   remove_EL_confirm_button();
 }
 
+function change_background_if_scheduled_day(day) {
+  const table = document.getElementById("days");
+  for (let i = 1; i < 7; i++) {
+    for (let x = 0; x < 7; x++) {
+      if (
+        table.rows[i].cells[x].innerText === day &&
+        table.rows[i].cells[x].className !== "other_month"
+      )
+        table.rows[i].cells[x].classList.add("scheduled_day");
+    }
+  }
+}
+
+function construct_item(day) {
+  // Get inputs.
+  const data_display = document.getElementById("data_display");
+  const input_title = document.getElementById("schedule_title");
+  const input_init_time = document.getElementById("schedule_initial_time");
+  const input_final_time = document.getElementById("schedule_final_time");
+  const input_description = document.getElementById("schedule_description");
+  // Get construction tags.
+  const data_item = document.createElement("div");
+  const title_div = document.createElement("div");
+  const span_title = document.createElement("span");
+  const span_time = document.createElement("span");
+  const description_div = document.createElement("div");
+  const span_description = document.createElement("span");
+  // Adding a class.
+  data_item.classList.add("data_display_item");
+  title_div.classList.add("data_display_div_title");
+  description_div.classList.add("data_display_div_description");
+  // Appending children.
+  data_display.appendChild(data_item);
+  data_item.appendChild(title_div);
+  data_item.appendChild(description_div);
+  title_div.appendChild(span_title);
+  title_div.appendChild(span_time);
+  description_div.appendChild(span_description);
+  // Passing the values
+  span_title.innerText = "⬤ " + day + ": " + input_title.value;
+  span_time.innerText = input_init_time.value + " - " + input_final_time.value;
+  span_description.innerText = input_description.value;
+  // Cleaning fields.
+  input_title.value = "";
+  input_init_time.value = "00:00";
+  input_final_time.value = "23:59";
+  input_description.value = "";
+}
+
 function add_item() {
   const input_title = document.getElementById("schedule_title");
   if (input_title.value !== "") {
-    // Create
-    const schedule_day = document.getElementById("schedule_day");
-    const data_display = document.getElementById("data_display");
-    const input_init_time = document.getElementById("schedule_initial_time");
-    const input_final_time = document.getElementById("schedule_final_time");
-    const input_description = document.getElementById("schedule_description");
-    const data_item = document.createElement("div");
-    const title_div = document.createElement("div");
-    const span_title = document.createElement("span");
-    const span_time = document.createElement("span");
-    const description_div = document.createElement("div");
-    const span_description = document.createElement("span");
-    // Add class
-    data_item.classList.add("data_display_item");
-    title_div.classList.add("data_display_div_title");
-    description_div.classList.add("data_display_div_description");
-    // Append child
-    data_display.appendChild(data_item);
-    data_item.appendChild(title_div);
-    data_item.appendChild(description_div);
-    title_div.appendChild(span_title);
-    title_div.appendChild(span_time);
-    description_div.appendChild(span_description);
-    // Values
-    span_title.innerText =
-      "⬤ " + schedule_day.innerText + ": " + input_title.value;
-    span_time.innerText =
-      input_init_time.value + " - " + input_final_time.value;
-    span_description.innerText = input_description.value;
-    // Clean fields
-    input_title.value = "";
-    input_init_time.value = "00:00";
-    input_final_time.value = "23:59";
-    input_description.value = "";
+    const day = document.getElementById("clicked_day").innerText;
+    construct_item(day);
+    change_background_if_scheduled_day(day);
+    input_title.style.borderBottom = "2px black solid";
     close_form();
     return;
   }

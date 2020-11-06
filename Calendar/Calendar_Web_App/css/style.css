@@ -226,10 +226,6 @@ td:hover {
   margin-left: 10px;
 }
 
-.schedule_day{
-  background-color: rgba(112, 203, 255, 0.349);
-} 
-
 .weekend{
 color: lightsalmon;
 }
@@ -237,6 +233,10 @@ color: lightsalmon;
 .other_month {
   background: none;
   color: rgba(175, 175, 175, 0.45);
+}
+
+.scheduled_day{
+  background-color: rgba(112, 203, 255, 0.349);
 }
 
 .buttons {
