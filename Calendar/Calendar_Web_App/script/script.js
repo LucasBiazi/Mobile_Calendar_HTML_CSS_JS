@@ -258,7 +258,7 @@ function get_clicked_cell_data(row, cell, value, cell_class) {
   return cell_data;
 }
 
-function open_pop_up(row, cell, value, cell_class) {
+function open_form(row, cell, value, cell_class) {
   const cell_data = get_clicked_cell_data(row, cell, value, cell_class);
   if (cell_data.cell_class === "other_month")
     if (cell_data.value > 14) previous_month();
@@ -328,7 +328,7 @@ function add_open_pop_up_button_to_cells() {
   for (let i = 1; i < 7; i++) {
     for (let x = 0; x < 7; x++) {
       table.rows[i].cells[x].addEventListener("click", () => {
-        open_pop_up(
+        open_form(
           i,
           x,
           table.rows[i].cells[x].innerText,
