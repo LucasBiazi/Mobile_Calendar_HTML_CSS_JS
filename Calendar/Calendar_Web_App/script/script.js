@@ -249,36 +249,12 @@ function remove_EL_confirm_button() {
   confirm_button.removeEventListener("click", add_item);
 }
 
-function get_clicked_cell_data(row, cell, value, cell_class, year, month) {
-  const cell_data = {
-    row: row,
-    cell: cell,
-    value: value,
-    cell_class: cell_class,
-    year: year,
-    month: month,
-  };
-  return cell_data;
-}
+function open_form(day, cell_class) {
+  if (cell_class === "other_month")
+    if (day > 14) previous_month();
+    else next_month();
 
-function open_form(row, cell, value, cell_class, year, month) {
-  const cell_data = get_clicked_cell_data(
-    row,
-    cell,
-    value,
-    cell_class,
-    year,
-    month
-  );
-  if (cell_data.cell_class === "other_month")
-    if (cell_data.value > 14) {
-      previous_month();
-      cell_data.month--;
-    } else {
-      next_month();
-      cell_data.month++;
-    }
-
+  const item_date = date_object(get_table_date().year, get_table_date().month);
   const pop_up = document.getElementById("add_schedule");
   pop_up.classList.remove("schedule_close");
   pop_up.classList.add("schedule_display");
@@ -287,10 +263,10 @@ function open_form(row, cell, value, cell_class, year, month) {
   const span_day = document.getElementById("day");
   const span_month = document.getElementById("month");
   const span_year = document.getElementById("year");
-  span_day.innerText = value;
+  span_day.innerText = day;
   // Set both bellow as display:none!
-  span_month.innerText = cell_data.month;
-  span_year.innerText = cell_data.year;
+  span_month.innerText = item_date.month;
+  span_year.innerText = item_date.year;
 
   add_EL_close_button();
   add_EL_confirm_button();
@@ -317,7 +293,7 @@ function change_background_if_scheduled_day(day) {
   }
 }
 
-function construct_item(day) {
+function construct_item(day, month, year) {
   // Get inputs.
   const data_display = document.getElementById("data_display");
   const input_title = document.getElementById("schedule_title");
@@ -331,10 +307,12 @@ function construct_item(day) {
   const span_time = document.createElement("span");
   const description_div = document.createElement("div");
   const span_description = document.createElement("span");
+  const span_data_info = document.createElement("span");
   // Adding a class.
   data_item.classList.add("data_display_item");
   title_div.classList.add("data_display_div_title");
   description_div.classList.add("data_display_div_description");
+  span_data_info.style.display = "none";
   // Appending children.
   data_display.appendChild(data_item);
   data_item.appendChild(title_div);
@@ -342,43 +320,56 @@ function construct_item(day) {
   title_div.appendChild(span_title);
   title_div.appendChild(span_time);
   description_div.appendChild(span_description);
+  description_div.appendChild(span_data_info);
   // Giving the values
   span_title.innerText = "⬤ " + day + ": " + input_title.value;
   span_time.innerText = input_init_time.value + " - " + input_final_time.value;
   span_description.innerText = input_description.value;
   data_item.classList.add("data_hide_item");
-  // Display data conditions
-  const amount_of_items = document.querySelectorAll(
-    "#data_display .data_display_item"
-  ).length;
-  const table_date = get_table_date();
-  const items = [];
-
-  for (let i = 0; i < amount_of_items; i++) {
-    items[i] = data_display.children[i].children[0].firstChild.innerText
-      .split(" ", 2)[1]
-      .split(":", 1)[0];
-    parseInt(items[i]);
-  }
-  const ordered_items = items.map((x) => parseInt(x));
-  ordered_items.sort((a, b) => a - b);
-  // if (cell_data.year === table_date.year)
-  //   if (cell_data.month_name === table_date.month_name) {
-  //     change_background_if_scheduled_day(cell_data.day);
-  //   }
-
+  span_data_info.innerText = day + " " + month + " " + year;
   // Cleaning fields.
   input_title.value = "";
   input_init_time.value = "00:00";
   input_final_time.value = "23:59";
   input_description.value = "";
+
+  console.log(span_data_info.innerText.split(" ", 1)[0]);
+  console.log(span_data_info.innerText.split(" ", 2)[1]);
+  console.log(span_data_info.innerText.split(" ", 3)[2]);
+}
+
+function display_data() {
+  const data_display = document.getElementById("data_display");
+  const amount_of_items = document.querySelectorAll(
+    "#data_display .data_display_item"
+  ).length;
+  const items = [];
+  // Display only the ones that belongs in this month, then organize them.
+  for (let i = 0; i < amount_of_items; i++) {
+    items[i] = data_display.children[i].children[0].firstChild.innerText
+      .split(" ", 2)[1]
+      .split(":", 1)[0];
+    parseInt(items[i]);
+    console.log(data_display.children[i].children[1].lastChild.innerText);
+  }
+  const ordered_items = items.map((x) => parseInt(x));
+  ordered_items.sort((a, b) => a - b); // Ordered list by days.
+
+  //const table_date = get_table_date();
+  // if (item_info.year === table_date.year)
+  //   if (item_info.month_name === table_date.month_name) {
+  //     data_item.classList.remove("data_hide_item");
+  //   }
 }
 
 function add_item() {
   const input_title = document.getElementById("schedule_title");
   if (input_title.value !== "") {
-    const day = document.getElementById("clicked_day").innerText;
-    construct_item(day);
+    const span_day = document.getElementById("day").innerText;
+    const span_month = document.getElementById("month").innerText;
+    const span_year = document.getElementById("year").innerText;
+    construct_item(span_day, span_month, span_year);
+    display_data();
     close_form();
     input_title.style.borderBottom = "2px black solid";
     return;
@@ -392,12 +383,8 @@ function add_form_button_to_cells() {
     for (let x = 0; x < 7; x++) {
       table.rows[i].cells[x].addEventListener("click", () => {
         open_form(
-          i,
-          x,
           table.rows[i].cells[x].innerText,
-          table.rows[i].cells[x].className,
-          get_table_date().year,
-          get_table_date().month
+          table.rows[i].cells[x].className
         );
       });
     }
