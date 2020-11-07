@@ -332,9 +332,16 @@ function construct_item(day) {
     "#data_display .data_display_item"
   ).length;
   const table_date = get_table_date();
+  const items = [];
+
   for (let i = 0; i < amount_of_items; i++) {
-    console.log(data_display.children[i].children[0].firstChild.innerText);
+    items[i] = data_display.children[i].children[0].firstChild.innerText
+      .split(" ", 2)[1]
+      .split(":", 1)[0];
+    parseInt(items[i]);
   }
+  const ordered_items = items.map((x) => parseInt(x));
+  console.log(ordered_items.sort((a, b) => a - b));
   // if (cell_data.year === table_date.year)
   //   if (cell_data.month_name === table_date.month_name) {
   //     change_background_if_scheduled_day(cell_data.day);
