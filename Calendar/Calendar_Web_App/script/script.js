@@ -351,9 +351,7 @@ function dislpay_schedule() {
   let data_item;
   //
   for (let i = 0; i < amount_of_items; i++) {
-    // if (data_display.children[i].className != ".item_CM") {
-    //   data_display.children[i].classList.add("data_hide_item");
-    // }
+    data_display.children[i].classList.add("data_hide_item");
     day = data_display.children[i].children[1].lastChild.innerText.split(
       " ",
       1
@@ -384,19 +382,16 @@ function dislpay_schedule() {
   const ordered_items = items.map((x) => parseInt(x));
   ordered_items.sort((a, b) => a - b); // Ordered list by days.
   for (let i = 0; i < ordered_items.length; i++) {
-    console.log(AI_CM[i].children[0].children[0].innerText
-      .split(" ", 2)[1]
-      .split(":", 1)[0])
-    console.log(ordered_items[0])
-    if (
-      AI_CM[i].children[0].children[0].innerText
-        .split(" ", 2)[1]
-        .split(":", 1)[0] == ordered_items[0]
-    ) {
-      ordered_items.splice(0, 1);
-      AI_CM[i].classList.remove("data_hide_item");      
-    } else{
-      data_display.insertBefore(AI_CM[i], null);
+    for (let x = 0; x < AI_CM.length; x++) {
+      if (
+        AI_CM[x].children[0].children[0].innerText
+          .split(" ", 2)[1]
+          .split(":", 1)[0] == ordered_items[0]
+      ) {
+        data_display.insertBefore(AI_CM[x], null);
+        AI_CM[x].classList.remove("data_hide_item");
+        ordered_items.splice(0, 1);
+      }
     }
   }
 }
