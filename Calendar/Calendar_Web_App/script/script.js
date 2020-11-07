@@ -125,7 +125,7 @@ const change_background_color_if_today = (row_number) => {
     for (let i = 0; i < 7; i++) {
       if (
         table.rows[row_number].cells[i].innerText == new Date().getDate() &&
-        table.rows[row_number].cells[i].className === "td"
+        table.rows[row_number].cells[i].className !== "other_month"
       ) {
         table.rows[row_number].cells[i].style.background = "black";
       }
@@ -322,10 +322,24 @@ function construct_item(day) {
   title_div.appendChild(span_title);
   title_div.appendChild(span_time);
   description_div.appendChild(span_description);
-  // Passing the values
+  // Giving the values
   span_title.innerText = "⬤ " + day + ": " + input_title.value;
   span_time.innerText = input_init_time.value + " - " + input_final_time.value;
   span_description.innerText = input_description.value;
+  data_item.classList.add("data_hide_item");
+  // Display data conditions
+  const amount_of_items = document.querySelectorAll(
+    "#data_display .data_display_item"
+  ).length;
+  const table_date = get_table_date();
+  for (let i = 0; i < amount_of_items; i++) {
+    console.log(data_display.children[i].children[0].firstChild.innerText);
+  }
+  // if (cell_data.year === table_date.year)
+  //   if (cell_data.month_name === table_date.month_name) {
+  //     change_background_if_scheduled_day(cell_data.day);
+  //   }
+
   // Cleaning fields.
   input_title.value = "";
   input_init_time.value = "00:00";
@@ -338,14 +352,14 @@ function add_item() {
   if (input_title.value !== "") {
     const day = document.getElementById("clicked_day").innerText;
     construct_item(day);
-    change_background_if_scheduled_day(day);
-    input_title.style.borderBottom = "2px black solid";
     close_form();
+    input_title.style.borderBottom = "2px black solid";
     return;
   }
   input_title.style.borderBottom = "2px red solid";
 }
-function add_open_pop_up_button_to_cells() {
+
+function add_form_button_to_cells() {
   const table = document.getElementById("days");
   for (let i = 1; i < 7; i++) {
     for (let x = 0; x < 7; x++) {
@@ -376,7 +390,7 @@ function load_buttons() {
   back_button.addEventListener("click", previous_month);
   t_button.addEventListener("click", current_month);
   next_button.addEventListener("click", next_month);
-  add_open_pop_up_button_to_cells();
+  add_form_button_to_cells();
 }
 
 // Loads main function as soon as the raw html loads.

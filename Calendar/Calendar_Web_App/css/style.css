@@ -188,7 +188,11 @@ td:hover {
 
 .data_display_item{
   width: 100%;
-  
+  display: block;
+}
+
+.data_hide_item{
+  display: none;
 }
 
 .data_display_div_title{
