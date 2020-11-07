@@ -249,29 +249,49 @@ function remove_EL_confirm_button() {
   confirm_button.removeEventListener("click", add_item);
 }
 
-function get_clicked_cell_data(row, cell, value, cell_class) {
+function get_clicked_cell_data(row, cell, value, cell_class, year, month) {
   const cell_data = {
     row: row,
     cell: cell,
     value: value,
     cell_class: cell_class,
+    year: year,
+    month: month,
   };
   return cell_data;
 }
 
-function open_form(row, cell, value, cell_class) {
-  const cell_data = get_clicked_cell_data(row, cell, value, cell_class);
+function open_form(row, cell, value, cell_class, year, month) {
+  const cell_data = get_clicked_cell_data(
+    row,
+    cell,
+    value,
+    cell_class,
+    year,
+    month
+  );
   if (cell_data.cell_class === "other_month")
-    if (cell_data.value > 14) previous_month();
-    else next_month();
+    if (cell_data.value > 14) {
+      previous_month();
+      cell_data.month--;
+    } else {
+      next_month();
+      cell_data.month++;
+    }
 
   const pop_up = document.getElementById("add_schedule");
   pop_up.classList.remove("schedule_close");
   pop_up.classList.add("schedule_display");
   const span_message = document.getElementById("form_top_message");
-  const span_day = document.getElementById("clicked_day");
   span_message.innerText = "New event on day: ";
+  const span_day = document.getElementById("day");
+  const span_month = document.getElementById("month");
+  const span_year = document.getElementById("year");
   span_day.innerText = value;
+  // Set both bellow as display:none!
+  span_month.innerText = cell_data.month;
+  span_year.innerText = cell_data.year;
+
   add_EL_close_button();
   add_EL_confirm_button();
 }
@@ -341,7 +361,7 @@ function construct_item(day) {
     parseInt(items[i]);
   }
   const ordered_items = items.map((x) => parseInt(x));
-  console.log(ordered_items.sort((a, b) => a - b));
+  ordered_items.sort((a, b) => a - b);
   // if (cell_data.year === table_date.year)
   //   if (cell_data.month_name === table_date.month_name) {
   //     change_background_if_scheduled_day(cell_data.day);
@@ -375,7 +395,9 @@ function add_form_button_to_cells() {
           i,
           x,
           table.rows[i].cells[x].innerText,
-          table.rows[i].cells[x].className
+          table.rows[i].cells[x].className,
+          get_table_date().year,
+          get_table_date().month
         );
       });
     }
