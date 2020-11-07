@@ -333,24 +333,31 @@ function construct_item(day, month, year) {
   input_final_time.value = "23:59";
   input_description.value = "";
 
-  console.log(span_data_info.innerText.split(" ", 1)[0]);
-  console.log(span_data_info.innerText.split(" ", 2)[1]);
-  console.log(span_data_info.innerText.split(" ", 3)[2]);
+  // console.log(span_data_info.innerText.split(" ", 1)[0]);
+  // console.log(span_data_info.innerText.split(" ", 2)[1]);
+  // console.log(span_data_info.innerText.split(" ", 3)[2]);
 }
 
-function display_data() {
+function dislpay_schedule() {
   const data_display = document.getElementById("data_display");
   const amount_of_items = document.querySelectorAll(
     "#data_display .data_display_item"
   ).length;
-  const items = [];
   // Display only the ones that belongs in this month, then organize them.
-  const items_current_month = [];
   const table_date = get_table_date();
+  let day;
   let month;
   let year;
   let data_item;
+  //
   for (let i = 0; i < amount_of_items; i++) {
+    // if (data_display.children[i].className != ".item_CM") {
+    //   data_display.children[i].classList.add("data_hide_item");
+    // }
+    day = data_display.children[i].children[1].lastChild.innerText.split(
+      " ",
+      1
+    )[0];
     month = data_display.children[i].children[1].lastChild.innerText.split(
       " ",
       2
@@ -362,18 +369,36 @@ function display_data() {
     data_item = data_display.children[i];
     if (year == table_date.year)
       if (month == month_name_in_number(table_date.month_name)) {
-        data_item.classList.remove("data_hide_item");
+        data_item.classList.add("item_CM");
       }
   }
-
-  // for (let i = 0; i < amount_of_items; i++) {
-  //   items[i] = data_display.children[i].children[0].firstChild.innerText
-  //     .split(" ", 2)[1]
-  //     .split(":", 1)[0];
-  //   parseInt(items[i]);
-  // }
-  // const ordered_items = items.map((x) => parseInt(x));
-  // ordered_items.sort((a, b) => a - b); // Ordered list by days.
+  // Now all items in the current month are show, let's organize them.
+  const items = [];
+  const AI_CM = document.querySelectorAll("#data_display .item_CM");
+  for (let i = 0; i < AI_CM.length; i++) {
+    items[i] = data_display.children[i].children[0].firstChild.innerText
+      .split(" ", 2)[1]
+      .split(":", 1)[0];
+    parseInt(items[i]);
+  }
+  const ordered_items = items.map((x) => parseInt(x));
+  ordered_items.sort((a, b) => a - b); // Ordered list by days.
+  for (let i = 0; i < ordered_items.length; i++) {
+    console.log(AI_CM[i].children[0].children[0].innerText
+      .split(" ", 2)[1]
+      .split(":", 1)[0])
+    console.log(ordered_items[0])
+    if (
+      AI_CM[i].children[0].children[0].innerText
+        .split(" ", 2)[1]
+        .split(":", 1)[0] == ordered_items[0]
+    ) {
+      ordered_items.splice(0, 1);
+      AI_CM[i].classList.remove("data_hide_item");      
+    } else{
+      data_display.insertBefore(AI_CM[i], null);
+    }
+  }
 }
 
 function add_item() {
@@ -383,7 +408,7 @@ function add_item() {
     const span_month = document.getElementById("month").innerText;
     const span_year = document.getElementById("year").innerText;
     construct_item(span_day, span_month, span_year);
-    display_data();
+    dislpay_schedule();
     close_form();
     input_title.style.borderBottom = "2px black solid";
     return;
