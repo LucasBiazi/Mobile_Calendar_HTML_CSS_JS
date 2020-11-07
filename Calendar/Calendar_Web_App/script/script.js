@@ -345,21 +345,35 @@ function display_data() {
   ).length;
   const items = [];
   // Display only the ones that belongs in this month, then organize them.
+  const items_current_month = [];
+  const table_date = get_table_date();
+  let month;
+  let year;
+  let data_item;
   for (let i = 0; i < amount_of_items; i++) {
-    items[i] = data_display.children[i].children[0].firstChild.innerText
-      .split(" ", 2)[1]
-      .split(":", 1)[0];
-    parseInt(items[i]);
-    console.log(data_display.children[i].children[1].lastChild.innerText);
+    month = data_display.children[i].children[1].lastChild.innerText.split(
+      " ",
+      2
+    )[1];
+    year = data_display.children[i].children[1].lastChild.innerText.split(
+      " ",
+      3
+    )[2];
+    data_item = data_display.children[i];
+    if (year == table_date.year)
+      if (month == month_name_in_number(table_date.month_name)) {
+        data_item.classList.remove("data_hide_item");
+      }
   }
-  const ordered_items = items.map((x) => parseInt(x));
-  ordered_items.sort((a, b) => a - b); // Ordered list by days.
 
-  //const table_date = get_table_date();
-  // if (item_info.year === table_date.year)
-  //   if (item_info.month_name === table_date.month_name) {
-  //     data_item.classList.remove("data_hide_item");
-  //   }
+  // for (let i = 0; i < amount_of_items; i++) {
+  //   items[i] = data_display.children[i].children[0].firstChild.innerText
+  //     .split(" ", 2)[1]
+  //     .split(":", 1)[0];
+  //   parseInt(items[i]);
+  // }
+  // const ordered_items = items.map((x) => parseInt(x));
+  // ordered_items.sort((a, b) => a - b); // Ordered list by days.
 }
 
 function add_item() {
