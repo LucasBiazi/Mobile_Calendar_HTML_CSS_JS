@@ -310,19 +310,6 @@ function close_form() {
   remove_EL_confirm_button();
 }
 
-function change_background_if_scheduled_day(day) {
-  const table = document.getElementById("days");
-  for (let i = 1; i < 7; i++) {
-    for (let x = 0; x < 7; x++) {
-      if (
-        table.rows[i].cells[x].innerText === day &&
-        table.rows[i].cells[x].className !== "other_month"
-      )
-        table.rows[i].cells[x].classList.add("scheduled_day");
-    }
-  }
-}
-
 function construct_item(day, month, year) {
   // Get inputs.
   const data_display = document.getElementById("data_display");
