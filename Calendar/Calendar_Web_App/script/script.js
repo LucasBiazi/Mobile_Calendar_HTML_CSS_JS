@@ -128,11 +128,46 @@ const change_background_color_if_today = (row_number) => {
   }
 };
 
+const change_background_color_if_scheduled = (row_number) => {
+  const table = document.getElementById("days");
+  const amount_of_items = document.querySelectorAll(
+    "#data_display .data_display_item"
+  ).length;
+  if (amount_of_items === 0) return;
+  const data_display = document.getElementById("data_display");
+  let month;
+  let year;
+  // Get the schedules of the current month.
+  for (let i = 0; i < amount_of_items; i++) {
+    day = data_display.children[i].children[1].lastChild.innerText.split(
+      " ",
+      1
+    )[0];
+    month = data_display.children[i].children[1].lastChild.innerText.split(
+      " ",
+      2
+    )[1];
+    year = data_display.children[i].children[1].lastChild.innerText.split(
+      " ",
+      3
+    )[2];
+    if (year == get_table_date().year)
+      if (month == month_name_in_number(get_table_date().month_name))
+        for (let i = 0; i < 7; i++)
+          if (
+            table.rows[row_number].cells[i].innerText === day &&
+            table.rows[row_number].cells[i].className !== "other_month"
+          )
+            table.rows[row_number].cells[i].classList.add("scheduled_day");
+  }
+};
+
 // Applies the background + today style. + loads schedules
 function load_table_style() {
   for (let x = 1; x < 7; x++) {
     change_background_color_if_weekend(x);
     change_background_color_if_today(x);
+    change_background_color_if_scheduled(x);
   }
 }
 
@@ -157,6 +192,7 @@ function populate_row(
 
 // Populates the table.
 function populate_table(date_year, date_month) {
+  reset_td_classes();
   // AD = Amount of Days. AC = Amount of cells. CM = Current Month.
   const date = date_object(date_year, date_month);
   const AC_CM_1_row = 7 - date.get_first_Day;
@@ -204,29 +240,26 @@ function populate_table(date_year, date_month) {
 
 function previous_month() {
   let table_date = get_table_date();
-  reset_td_classes();
   table_date.month -= 1;
   print_year_and_month(table_date.year, table_date.month);
-  populate_table(table_date.year, table_date.month);
   dislpay_schedule();
+  populate_table(table_date.year, table_date.month);
 }
 
 function current_month() {
   let table_date = get_table_date();
-  reset_td_classes();
   table_date = date_object(new Date().getFullYear(), new Date().getMonth());
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
-  populate_table(new Date().getFullYear(), new Date().getMonth());
   dislpay_schedule();
+  populate_table(new Date().getFullYear(), new Date().getMonth());
 }
 
 function next_month() {
   let table_date = get_table_date();
-  reset_td_classes();
   table_date.month += 1;
   print_year_and_month(table_date.year, table_date.month);
-  populate_table(table_date.year, table_date.month);
   dislpay_schedule();
+  populate_table(table_date.year, table_date.month);
 }
 
 function add_EL_close_button() {
@@ -250,27 +283,23 @@ function open_form(day, cell_class) {
   if (cell_class === "other_month")
     if (day > 14) previous_month();
     else next_month();
-  setTimeout(() => {
-    const item_date = date_object(
-      get_table_date().year,
-      get_table_date().month
-    );
-    const pop_up = document.getElementById("add_schedule");
-    pop_up.classList.remove("schedule_close");
-    pop_up.classList.add("schedule_display");
-    const span_message = document.getElementById("form_top_message");
-    span_message.innerText = "New event on day: ";
-    const span_day = document.getElementById("day");
-    const span_month = document.getElementById("month");
-    const span_year = document.getElementById("year");
-    span_day.innerText = day;
-    // Set both bellow as display:none!
-    span_month.innerText = item_date.month;
-    span_year.innerText = item_date.year;
 
-    add_EL_close_button();
-    add_EL_confirm_button();
-  }, 300);
+  const item_date = date_object(get_table_date().year, get_table_date().month);
+  const pop_up = document.getElementById("add_schedule");
+  pop_up.classList.remove("schedule_close");
+  pop_up.classList.add("schedule_display");
+  const span_message = document.getElementById("form_top_message");
+  span_message.innerText = "New event on day: ";
+  const span_day = document.getElementById("day");
+  const span_month = document.getElementById("month");
+  const span_year = document.getElementById("year");
+  span_day.innerText = day;
+  // Set both bellow as display:none!
+  span_month.innerText = item_date.month;
+  span_year.innerText = item_date.year;
+
+  add_EL_close_button();
+  add_EL_confirm_button();
 }
 
 function close_form() {
@@ -339,13 +368,17 @@ function dislpay_schedule() {
   const amount_of_items = document.querySelectorAll(
     "#data_display .data_display_item"
   ).length;
-  if (amount_of_items === 0) return console.log("No schedules in this month!");
+  if (amount_of_items === 0) return;
   const data_display = document.getElementById("data_display");
   let month;
   let year;
-  // Get the schedules of the current month.
+  // Cleaning the display_data
   for (let i = 0; i < amount_of_items; i++) {
     data_display.children[i].classList.add("data_hide_item");
+    data_display.children[i].classList.remove("item_CM");
+  }
+  // Get the schedules of the current month.
+  for (let i = 0; i < amount_of_items; i++) {
     month = data_display.children[i].children[1].lastChild.innerText.split(
       " ",
       2
@@ -394,6 +427,7 @@ function add_item() {
     const span_year = document.getElementById("year").innerText;
     construct_item(span_day, span_month, span_year);
     dislpay_schedule();
+    populate_table(get_table_date().year, get_table_date().month);
     close_form();
     input_title.style.borderBottom = "2px black solid";
     return;
