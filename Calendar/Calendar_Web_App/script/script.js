@@ -89,16 +89,11 @@ function create_table() {
   }
 }
 
-// Resets the 'td' data style properties.
-function reset_table_data_style() {
+function reset_td_classes() {
   const table = document.getElementById("days");
   for (let i = 1; i < 7; i++) {
     for (let x = 0; x < 7; x++) {
-      table.rows[i].cells[x].style.color = "";
-      table.rows[i].cells[x].style.background = "";
-      table.rows[i].cells[x].classList.remove("td");
-      table.rows[i].cells[x].classList.remove("other_month");
-      table.rows[i].cells[x].classList.remove("scheduled_day");
+      table.rows[i].cells[x].className = "";
     }
   }
 }
@@ -127,7 +122,7 @@ const change_background_color_if_today = (row_number) => {
         table.rows[row_number].cells[i].innerText == new Date().getDate() &&
         table.rows[row_number].cells[i].className !== "other_month"
       ) {
-        table.rows[row_number].cells[i].style.background = "black";
+        table.rows[row_number].cells[i].classList.add("today");
       }
     }
   } else {
@@ -210,7 +205,7 @@ function populate_table(date_year, date_month) {
 }
 function previous_month() {
   let table_date = get_table_date();
-  reset_table_data_style();
+  reset_td_classes();
   table_date.month -= 1;
   print_year_and_month(table_date.year, table_date.month);
   populate_table(table_date.year, table_date.month);
@@ -218,7 +213,7 @@ function previous_month() {
 
 function current_month() {
   let table_date = get_table_date();
-  reset_table_data_style();
+  reset_td_classes();
   table_date = date_object(new Date().getFullYear(), new Date().getMonth());
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
   populate_table(new Date().getFullYear(), new Date().getMonth());
@@ -226,7 +221,7 @@ function current_month() {
 
 function next_month() {
   let table_date = get_table_date();
-  reset_table_data_style();
+  reset_td_classes();
   table_date.month += 1;
   print_year_and_month(table_date.year, table_date.month);
   populate_table(table_date.year, table_date.month);
@@ -312,7 +307,6 @@ function construct_item(day, month, year) {
   data_item.classList.add("data_display_item");
   title_div.classList.add("data_display_div_title");
   description_div.classList.add("data_display_div_description");
-  span_data_info.style.display = "none";
   // Appending children.
   data_display.appendChild(data_item);
   data_item.appendChild(title_div);
@@ -332,10 +326,6 @@ function construct_item(day, month, year) {
   input_init_time.value = "00:00";
   input_final_time.value = "23:59";
   input_description.value = "";
-
-  // console.log(span_data_info.innerText.split(" ", 1)[0]);
-  // console.log(span_data_info.innerText.split(" ", 2)[1]);
-  // console.log(span_data_info.innerText.split(" ", 3)[2]);
 }
 
 function dislpay_schedule() {
@@ -343,19 +333,12 @@ function dislpay_schedule() {
   const amount_of_items = document.querySelectorAll(
     "#data_display .data_display_item"
   ).length;
-  // Display only the ones that belongs in this month, then organize them.
   const table_date = get_table_date();
-  let day;
   let month;
   let year;
-  let data_item;
-  //
+  // Get the schedules of the current month.
   for (let i = 0; i < amount_of_items; i++) {
     data_display.children[i].classList.add("data_hide_item");
-    day = data_display.children[i].children[1].lastChild.innerText.split(
-      " ",
-      1
-    )[0];
     month = data_display.children[i].children[1].lastChild.innerText.split(
       " ",
       2
@@ -364,32 +347,34 @@ function dislpay_schedule() {
       " ",
       3
     )[2];
-    data_item = data_display.children[i];
     if (year == table_date.year)
-      if (month == month_name_in_number(table_date.month_name)) {
-        data_item.classList.add("item_CM");
-      }
+      if (month == month_name_in_number(table_date.month_name))
+        data_display.children[i].classList.add("item_CM");
   }
-  // Now all items in the current month are show, let's organize them.
-  const items = [];
-  const AI_CM = document.querySelectorAll("#data_display .item_CM");
-  for (let i = 0; i < AI_CM.length; i++) {
-    items[i] = data_display.children[i].children[0].firstChild.innerText
+  // Ascending order considering the day.
+  const unordered_items = [];
+  const CM_schedules = document.querySelectorAll("#data_display .item_CM");
+  for (let i = 0; i < CM_schedules.length; i++) {
+    unordered_items[i] = data_display.children[
+      i
+    ].children[0].firstChild.innerText
       .split(" ", 2)[1]
       .split(":", 1)[0];
-    parseInt(items[i]);
   }
-  const ordered_items = items.map((x) => parseInt(x));
-  ordered_items.sort((a, b) => a - b); // Ordered list by days.
-  for (let i = 0; i < ordered_items.length; i++) {
-    for (let x = 0; x < AI_CM.length; x++) {
+  const ordered_items = unordered_items.map((x) => parseInt(x));
+  ordered_items.sort((a, b) => a - b);
+  // Displaying in order!
+  for (let i = 0; i < CM_schedules.length; i++) {
+    for (let x = 0; x < CM_schedules.length; x++) {
+      console.log("Ordered_items: " + ordered_items.length)
+      console.log("CM_schedules: " + CM_schedules.length)
       if (
-        AI_CM[x].children[0].children[0].innerText
+        CM_schedules[x].children[0].children[0].innerText
           .split(" ", 2)[1]
           .split(":", 1)[0] == ordered_items[0]
       ) {
-        data_display.insertBefore(AI_CM[x], null);
-        AI_CM[x].classList.remove("data_hide_item");
+        data_display.insertBefore(CM_schedules[x], null);
+        CM_schedules[x].classList.remove("data_hide_item");
         ordered_items.splice(0, 1);
       }
     }

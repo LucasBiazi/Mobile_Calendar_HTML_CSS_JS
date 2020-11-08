@@ -234,6 +234,10 @@ td:hover {
 color: lightsalmon;
 }
 
+.today{
+  background-color: black;
+}
+
 .other_month {
   background: none;
   color: rgba(175, 175, 175, 0.45);
