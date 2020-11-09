@@ -413,7 +413,7 @@ function dislpay_schedule() {
   // Displaying in order!
   if (CM_schedules.length === 1)
     data_display.insertBefore(CM_schedules[0], null);
-  for (let i = 0; i < ordered_items.length; i++)
+  for (let i = 0; i < CM_schedules.length; i++)
     for (let x = 0; x < CM_schedules.length; x++) {
       if (
         CM_schedules[x].children[0].children[0].innerText
