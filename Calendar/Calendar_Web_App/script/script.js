@@ -165,13 +165,19 @@ const change_background_color_if_scheduled = (row_number) => {
           break;
         case -1: // Past month
           for (let i = 0; i < 6; i++)
-            if (table.rows[1].cells[i].innerText === day)
+            if (
+              table.rows[1].cells[i].innerText === day &&
+              table.rows[1].cells[i].className === "other_month"
+            )
               table.rows[1].cells[i].classList.add("scheduled_day");
           break;
         case 1: // Next month
           for (let i = 0; i < 7; i++)
             for (let x = 5; x < 7; x++)
-              if (table.rows[x].cells[i].innerText === day)
+              if (
+                table.rows[x].cells[i].innerText === day &&
+                table.rows[x].cells[i].className === "other_month"
+              )
                 table.rows[x].cells[i].classList.add("scheduled_day");
           break;
         default:
