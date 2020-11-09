@@ -151,14 +151,33 @@ const change_background_color_if_scheduled = (row_number) => {
       " ",
       3
     )[2];
-    if (year == get_table_date().year)
-      if (month == month_name_in_number(get_table_date().month_name))
-        for (let i = 0; i < 7; i++)
-          if (
-            table.rows[row_number].cells[i].innerText === day &&
-            table.rows[row_number].cells[i].className !== "other_month"
-          )
-            table.rows[row_number].cells[i].classList.add("scheduled_day");
+    if (year == get_table_date().year) {
+      let result = month - month_name_in_number(get_table_date().month_name);
+      switch (result) {
+        case 0: // Curent month
+          for (let i = 0; i < 7; i++) {
+            if (
+              table.rows[row_number].cells[i].innerText === day &&
+              table.rows[row_number].cells[i].className !== "other_month"
+            )
+              table.rows[row_number].cells[i].classList.add("scheduled_day");
+          }
+          break;
+        case -1: // Past month
+          for (let i = 0; i < 6; i++)
+            if (table.rows[1].cells[i].innerText === day)
+              table.rows[1].cells[i].classList.add("scheduled_day");
+          break;
+        case 1: // Next month
+          for (let i = 0; i < 7; i++)
+            for (let x = 5; x < 7; x++)
+              if (table.rows[x].cells[i].innerText === day)
+                table.rows[x].cells[i].classList.add("scheduled_day");
+          break;
+        default:
+          break;
+      }
+    }
   }
 };
 
