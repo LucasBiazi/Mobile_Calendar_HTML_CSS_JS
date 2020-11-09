@@ -163,7 +163,7 @@ const change_background_color_if_scheduled = (row_number) => {
 };
 
 // Applies the background + today style. + loads schedules
-function load_table_style() {
+function load_td_style() {
   for (let x = 1; x < 7; x++) {
     change_background_color_if_weekend(x);
     change_background_color_if_today(x);
@@ -171,7 +171,6 @@ function load_table_style() {
   }
 }
 
-// Populates a row.
 function populate_row(
   execution_number,
   row_number,
@@ -190,7 +189,6 @@ function populate_row(
   }
 }
 
-// Populates the table.
 function populate_table(date_year, date_month) {
   reset_td_classes();
   // AD = Amount of Days. AC = Amount of cells. CM = Current Month.
@@ -235,31 +233,31 @@ function populate_table(date_year, date_month) {
       day_counter = date.amount_of_days;
     }
   }
-  load_table_style();
+  load_td_style();
 }
 
 function previous_month() {
   let table_date = get_table_date();
   table_date.month -= 1;
   print_year_and_month(table_date.year, table_date.month);
-  dislpay_schedule();
   populate_table(table_date.year, table_date.month);
+  dislpay_schedule();
 }
 
 function current_month() {
   let table_date = get_table_date();
   table_date = date_object(new Date().getFullYear(), new Date().getMonth());
   print_year_and_month(new Date().getFullYear(), new Date().getMonth());
-  dislpay_schedule();
   populate_table(new Date().getFullYear(), new Date().getMonth());
+  dislpay_schedule();
 }
 
 function next_month() {
   let table_date = get_table_date();
   table_date.month += 1;
   print_year_and_month(table_date.year, table_date.month);
-  dislpay_schedule();
   populate_table(table_date.year, table_date.month);
+  dislpay_schedule();
 }
 
 function add_EL_close_button() {
@@ -357,14 +355,14 @@ function dislpay_schedule() {
   ).length;
   if (amount_of_items === 0) return;
   const data_display = document.getElementById("data_display");
-  let month;
-  let year;
   // Cleaning the display_data
   for (let i = 0; i < amount_of_items; i++) {
     data_display.children[i].classList.add("data_hide_item");
     data_display.children[i].classList.remove("item_CM");
   }
   // Get the schedules of the current month.
+  let month;
+  let year;
   for (let i = 0; i < amount_of_items; i++) {
     month = data_display.children[i].children[1].lastChild.innerText.split(
       " ",
@@ -375,8 +373,10 @@ function dislpay_schedule() {
       3
     )[2];
     if (year == get_table_date().year)
-      if (month == month_name_in_number(get_table_date().month_name))
+      if (month == month_name_in_number(get_table_date().month_name)) {
         data_display.children[i].classList.add("item_CM");
+        data_display.children[i].classList.remove("data_hide_item");
+      }
   }
 
   // Ascending order considering the day.
@@ -392,7 +392,9 @@ function dislpay_schedule() {
   const ordered_items = unordered_items.map((x) => parseInt(x));
   ordered_items.sort((a, b) => a - b);
   // Displaying in order!
-  for (let i = 0; i < CM_schedules.length; i++)
+  if (CM_schedules.length === 1)
+    data_display.insertBefore(CM_schedules[0], null);
+  for (let i = 0; i < ordered_items.length; i++)
     for (let x = 0; x < CM_schedules.length; x++) {
       if (
         CM_schedules[x].children[0].children[0].innerText
@@ -400,7 +402,6 @@ function dislpay_schedule() {
           .split(":", 1)[0] == ordered_items[0]
       ) {
         data_display.insertBefore(CM_schedules[x], null);
-        CM_schedules[x].classList.remove("data_hide_item");
         ordered_items.splice(0, 1);
       }
     }
@@ -409,14 +410,14 @@ function dislpay_schedule() {
 function add_item() {
   const input_title = document.getElementById("schedule_title");
   if (input_title.value !== "") {
+    input_title.style.borderBottom = "2px black solid";
     const span_day = document.getElementById("day").innerText;
     const span_month = document.getElementById("month").innerText;
     const span_year = document.getElementById("year").innerText;
     construct_item(span_day, span_month, span_year);
+    load_td_style();
     dislpay_schedule();
-    populate_table(get_table_date().year, get_table_date().month);
     close_form();
-    input_title.style.borderBottom = "2px black solid";
     return;
   }
   input_title.style.borderBottom = "2px red solid";
@@ -442,7 +443,6 @@ function main() {
   populate_table(new Date().getFullYear(), new Date().getMonth());
 }
 
-// Loads buttons.
 function load_buttons() {
   const back_button = document.getElementById("back_button");
   const t_button = document.getElementById("t_button");
