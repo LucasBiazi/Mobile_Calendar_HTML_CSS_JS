@@ -159,8 +159,9 @@ const change_background_color_if_scheduled = (row_number) => {
             if (
               table.rows[row_number].cells[i].innerText === day &&
               table.rows[row_number].cells[i].className !== "other_month"
-            )
+            ) {
               table.rows[row_number].cells[i].classList.add("scheduled_day");
+            }
           }
           break;
         case -1: // Past month
@@ -397,6 +398,8 @@ function dislpay_schedule() {
       " ",
       3
     )[2];
+    console.log("year: " + year);
+    console.log("month: " + month);
     if (year == get_table_date().year)
       if (month == month_name_in_number(get_table_date().month_name)) {
         data_display.children[i].classList.add("item_CM");
@@ -408,14 +411,13 @@ function dislpay_schedule() {
   const unordered_items = [];
   const CM_schedules = document.querySelectorAll("#data_display .item_CM");
   for (let i = 0; i < CM_schedules.length; i++) {
-    unordered_items[i] = data_display.children[
-      i
-    ].children[0].firstChild.innerText
+    unordered_items[i] = CM_schedules[i].children[0].firstChild.innerText
       .split(" ", 2)[1]
       .split(":", 1)[0];
   }
   const ordered_items = unordered_items.map((x) => parseInt(x));
   ordered_items.sort((a, b) => a - b);
+  console.log(ordered_items);
   // Displaying in order!
   if (CM_schedules.length === 1)
     data_display.insertBefore(CM_schedules[0], null);
