@@ -103,7 +103,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
-  /* animation: display_opacity_zoom 1s ease-out; */
+   animation: display_opacity_zoom 1s ease-out; 
 }
 
 .year_title {
@@ -134,7 +134,7 @@ body {
   margin-top: 10px;
   width: 100%;
   height: 50%;
-  /* animation: opacity 1s ease-in-out; */
+   animation: opacity 1s ease-in-out; 
 }
 
 table {
@@ -183,7 +183,7 @@ td:hover {
   border: none;
   border-radius: 5px;
   overflow-y: scroll;
-  /* animation: display_data 2s ease; */
+   animation: display_data 2s ease; 
 }
 
 .data_display_item{
@@ -273,7 +273,7 @@ button:hover{
 }
 
 button:first-child{
-  /* animation: display_button_back 1s ease;  */
+   animation: display_button_back 1s ease;  
   position: relative;
 }
 
@@ -283,11 +283,11 @@ button:first-child img{
 
 /* 
 button:not(:first-child):not(:last-child){
-  animation: display_opacity_zoom 1s ease-out;
+  imation: display_opacity_zoom 1s ease-ou
 } */
 
 button:last-child{
-  /* animation: display_button_next 1s ease;  */
+   animation: display_button_next 1s ease;  
   position: relative;
 }
 
@@ -316,12 +316,12 @@ button:last-child img{
   background: white;
   justify-content: space-between;
   align-items: flex-start;
-  /* animation: display_schedule .3s ease; */
+   animation: display_schedule .3s ease; 
 }
 
 /* .schedule_close{
-   animation: close_schedule .3s ease;
-  animation-fill-mode: forwards;
+   imation: close_schedule .3s eas
+  imation-fill-mode: forward
  #87FFA7 <= Color for schedules 
 } */
 
