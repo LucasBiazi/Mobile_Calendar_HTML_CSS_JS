@@ -318,9 +318,10 @@ function open_form(day, cell_class) {
   const span_month = document.getElementById("month");
   const span_year = document.getElementById("year");
   span_day.innerText = day;
-  // Set both bellow as display:none!
   span_month.innerText = item_date.month;
   span_year.innerText = item_date.year;
+  span_month.classList.add("data_hide_item");
+  span_year.classList.add("data_hide_item");
 
   add_EL_close_button();
   add_EL_confirm_button();
@@ -328,7 +329,7 @@ function open_form(day, cell_class) {
 
 function close_form() {
   const pop_up = document.getElementById("add_schedule");
-  pop_up.classList.add("schedule_close")
+  pop_up.classList.add("schedule_close");
   setTimeout(() => {
     pop_up.classList.add("schedule_close");
     pop_up.classList.remove("schedule_display");
