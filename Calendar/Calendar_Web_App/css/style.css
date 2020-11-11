@@ -319,11 +319,10 @@ button:last-child img{
    animation: display_schedule .3s ease; 
 }
 
-/* .schedule_close{
-   imation: close_schedule .3s eas
-  imation-fill-mode: forward
- #87FFA7 <= Color for schedules 
-} */
+.schedule_close{
+   animation: close_schedule .3s ease;
+  animation-fill-mode: forwards; 
+} 
 
 .close_button{
   width: 100%;

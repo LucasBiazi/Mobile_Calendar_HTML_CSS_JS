@@ -328,8 +328,11 @@ function open_form(day, cell_class) {
 
 function close_form() {
   const pop_up = document.getElementById("add_schedule");
-  pop_up.classList.add("schedule_close");
-  pop_up.classList.remove("schedule_display");
+  pop_up.classList.add("schedule_close")
+  setTimeout(() => {
+    pop_up.classList.add("schedule_close");
+    pop_up.classList.remove("schedule_display");
+  }, 300);
   remove_EL_close_button();
   remove_EL_confirm_button();
 }
