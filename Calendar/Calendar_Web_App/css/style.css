@@ -183,7 +183,7 @@ td:hover {
   border: none;
   border-radius: 5px;
   overflow-y: scroll;
-   animation: display_data 2s ease; 
+   animation: display_data .5s ease; 
 }
 
 .data_display_item{
@@ -398,6 +398,7 @@ input{
 }
 
 .schedule_button_div button{
+  animation: none;
   font-size: 20px;
   color: black;
   border: 2px black solid;
