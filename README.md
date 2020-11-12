@@ -1,30 +1,31 @@
------------------------------------------------------------------------------------------------------------------------------
-# Mobile_Calendar, current version: 0.2.0.4
------------------------------------------------------------------------------------------------------------------------------
-**Goal:**
-This is project is meant to be a calendar for mobile and desktop devices. It is, and will always be an open source project. Suggestions are always welcome.
+# Mobile_Calendar, current version: 0.3.0.0
 
-**Currently:**
-The project shows the days of the month. Well displayed in most mobile + small/medium monitors. Tablets may face issues.
+## **Goal:**
+This is project is meant to be a calendar for mobile and desktop devices. It is, and will always be an open source project. Suggestions are always welcome. The main focus here is to train my HTML + CSS + JS skills.
 
-**Working at the moment:**
-Script performance;
-Code polishiment;
-Clean code;
+###### **Currently:**
+The project shows the days of the month and let you add and schedule to any day that you want. Well displayed in most mobile + small/medium monitors. Tablets may face issues.
 
-**Future Implementations:**
-Notes system;
-Data-base integration;
-Full release;
+###### **Goals:**
+- [x] Script performance;
+- [x] Code polishiment;
+- [x] Notes System;
+- [] Clean code;
+- [] Full release;
 
------------------------------------------------------------------------------------------------------------------------------
-Special thanks:
------------------------------------------------------------------------------------------------------------------------------
+###### **Future Implementations:**
+* Make it responsible.
+
+###### **Implementing at the moment:**
+* Notes system.
+
+
+Special thanks to:
 https://codereview.stackexchange.com/questions/250759/animated-calendar-using-html-css-js/250778#250778
 
------------------------------------------------------------------------------------------------------------------------------
+
 **Latest Update:**
------------------------------------------------------------------------------------------------------------------------------
-In the last update the whole js script was rebuilt. The former one contained a functioning code, but not the best. Good practices and better organization are also coming along. Expect a better performance overall.
-Finally, the project still needs updates in its archieves and DOM organization, once it is done, the next implementations will occour. 
-Happy halloween for everyone.
+Welcome to the latest update! In this version, I'would like to introduce the notes system. It counts with the following functions:
+* Create notes with a starting time, ending time, title and description;
+* See all the schedules of the current displayed month in ascending order;
+* See the days in which you have schedules;
