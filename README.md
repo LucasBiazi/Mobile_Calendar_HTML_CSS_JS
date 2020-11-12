@@ -20,7 +20,7 @@ The project shows the days of the month and let you add and schedule to any day 
 * Notes system.
 
 
-Special thanks to:
+**Special thanks to:**
 https://codereview.stackexchange.com/questions/250759/animated-calendar-using-html-css-js/250778#250778
 
 
