@@ -10,8 +10,8 @@ The project shows the days of the month and let you add and schedule to any day 
 - [x] Script performance;
 - [x] Code polishiment;
 - [x] Notes System;
-- [] Clean code;
-- [] Full release;
+- [ ] Clean code;
+- [ ] Full release;
 
 ###### **Future Implementations:**
 * Make it responsible.
